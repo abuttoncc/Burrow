@@ -54,6 +54,8 @@ cd your-vault && claude
 
 模板自带 `.claude/`：`settings.json`（无人值守权限白名单）+ `automation/burrow-routine.sh`（cron/launchd 运行器）。
 
+**Obsidian 设置（已发货 vs 需安装）**：主题/snippet/图谱（`path:wiki` 过滤 + 按类型目录着色）/日记目录均已预置在 `.obsidian/`；**Dataview 插件必装**（dashboard 是活的 Dataview 视图）；可选：Terminal（控制台按钮的集成终端）、Homepage（启动即打开 Dashboard）、obsidian-git（自动备份）。
+
 ## 七条不变量（违反任何一条就不是 Burrow）
 
 1. **唯一闸门**——正典写入只经 ingest

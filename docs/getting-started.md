@@ -19,7 +19,7 @@ cd your-vault && claude
 
 **Pick your mode — start Lite.** Lite mode is pure markdown, zero dependencies, and gets you to your first compilation in half an hour. Upgrade to engine mode (`pip install pydantic`, Python 3.8+) when you hit the real pain it solves: lots of numbers you want to query and aggregate (SQLite bitemporal storage), or a vault big enough to need BM25 search. Don't front-load the friction.
 
-**Install the Dataview community plugin** (Obsidian → Settings → Community plugins) — the dashboard is a live Dataview view. Enable the bundled **Burrow theme** + `dashboard` snippet under Settings → Appearance for the full look.
+**Install the Dataview community plugin** (Obsidian → Settings → Community plugins) — the dashboard is a live Dataview view; it is the only hard plugin requirement. The shipped `.obsidian/` already enables the **Burrow theme**, the `dashboard` snippet, a graph view filtered to `path:wiki` with one color per type directory (the graph shows the ontology, not your prose), and daily notes pointed at `05-Daily/`. Optional plugins: **Terminal** (integrated terminal for the dashboard's console buttons), **Homepage** (boot into the dashboard), **obsidian-git** (auto-backup).
 
 ## Phase 1 · Write the house rules (30–60 minutes — the step that matters most)
 

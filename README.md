@@ -62,6 +62,18 @@ cd your-vault && claude
 
 The template ships its `.claude/` pre-wired: `settings.json` (permission allowlist for unattended runs) and `automation/burrow-routine.sh` (the cron/launchd runner).
 
+**Obsidian setup (shipped vs needed):**
+
+| | Status |
+|---|---|
+| Burrow theme + `dashboard` snippet | ✅ shipped, pre-enabled (`.obsidian/`) |
+| Graph view → `path:wiki` filter + one color per type directory | ✅ shipped (`graph.json`) — the graph shows the ontology, not your prose |
+| Daily notes → `05-Daily/` | ✅ shipped (`daily-notes.json`) |
+| **Dataview** | ⚠️ **required, install it** (Settings → Community plugins) — the dashboard is a live Dataview view |
+| Terminal (`terminal`) | optional — gives the dashboard's console buttons an integrated terminal |
+| Homepage | optional — boot straight into `00-Dashboard/Dashboard.md` |
+| obsidian-git | optional — auto-commit your vault as backup |
+
 **3. Let it walk you in**
 
 ```

@@ -1,0 +1,72 @@
+{
+  "collapse-filter": false,
+  "search": "path:wiki",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:institutions/",
+      "color": {
+        "a": 1,
+        "rgb": 13121311
+      }
+    },
+    {
+      "query": "path:instruments/",
+      "color": {
+        "a": 1,
+        "rgb": 3104138
+      }
+    },
+    {
+      "query": "path:indicators/",
+      "color": {
+        "a": 1,
+        "rgb": 3050118
+      }
+    },
+    {
+      "query": "path:mechanisms/",
+      "color": {
+        "a": 1,
+        "rgb": 3112270
+      }
+    },
+    {
+      "query": "path:events/",
+      "color": {
+        "a": 1,
+        "rgb": 11896091
+      }
+    },
+    {
+      "query": "path:analyses/",
+      "color": {
+        "a": 1,
+        "rgb": 8029844
+      }
+    },
+    {
+      "query": "path:sources/",
+      "color": {
+        "a": 1,
+        "rgb": 11842740
+      }
+    }
+  ],
+  "collapse-display": true,
+  "showArrow": false,
+  "textFadeMultiplier": 0,
+  "nodeSizeMultiplier": 1,
+  "lineSizeMultiplier": 1,
+  "collapse-forces": true,
+  "centerStrength": 0.52,
+  "repelStrength": 10,
+  "linkStrength": 1,
+  "linkDistance": 250,
+  "scale": 0.55,
+  "close": true
+}
