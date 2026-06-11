@@ -14,16 +14,16 @@ The fraction of deposits major commercial banks must hold at the central bank. A
 
 | predicate | value | valid_from | valid_to | caused_by | retired_by |
 |---|---|---|---|---|---|
-| rrr-major-banks | 7.50% | 2026-06-15 | — | [[events/2026-06-09-rrr-cut]] | — |
-| rrr-major-banks | 8.00% | 2026-02-05 | 2026-06-15 | *(pre-template history)* | [[events/2026-06-09-rrr-cut]] |
+| rrr-major-banks | 7.50% | 2026-06-15 | — | [[2026-06-09-rrr-cut]] | — |
+| rrr-major-banks | 8.00% | 2026-02-05 | 2026-06-15 | *(pre-template history)* | [[2026-06-09-rrr-cut]] |
 
 ## Facts (T0)
 
-- 2026-06-09 · announcement specifies 50bp cut, effective 2026-06-15 · source: [[events/2026-06-09-rrr-cut]] · verified
+- 2026-06-09 · announcement specifies 50bp cut, effective 2026-06-15 · source: [[2026-06-09-rrr-cut]] · verified
 
 ## Relations
 
-- operated_by [[peoples-bank-of-china]]
+- operated_by [[People's Bank of China]]
 - transmits_to interbank-liquidity *(broken link — intentional: your first lint run should catch this)*
 
 ## Changelog

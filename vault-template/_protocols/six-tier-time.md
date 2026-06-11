@@ -11,7 +11,7 @@
 | **T2** | Standing logic | A mechanism or rule: "A transmits to B", "policy X constrains Y" — with a **durability** grade | Zipper like T1, plus `durability: high` (definitional) / `medium` (causal, can break) / `low` (empirical pattern) |
 | **T3** | Relation | A typed edge between two pages, from the domain's controlled vocabulary | Lives in the page's Relations section as `rel_type [[target]]`. Out-of-vocab → reject |
 | **T4** | Event | Something that **happened** on a date: an announcement, a change, a decision | Append-only, dated, never edited. Events are what stamp T1/T2 changes |
-| **T5** | Type axiom | The ontology itself: node types, edge vocabulary, judging criteria | Changes only by explicit human edit to `_ontology/` (write-type `axiom-change`, locked) |
+| **T5** | Type axiom | The ontology itself: node types, edge vocabulary, judging criteria | Changes only by explicit human edit to `wiki/<domain>/_ontology.md` (write-type `axiom-change`, locked) |
 
 ## Decision path (apply in order)
 

@@ -49,7 +49,7 @@ cd your-vault && claude
 无人值守（Obsidian 没有后台运行时——所有同类项目都一样）：
 
 ```bash
-0 4 * * * cd /path/to/vault && claude -p "/burrow-routine" >> _burrow/cron.log 2>&1
+0 4 * * * cd /path/to/vault && claude -p "/burrow-routine" >> 08-Ops/runs/cron.log 2>&1
 ```
 
 ## 七条不变量（违反任何一条就不是 Burrow）

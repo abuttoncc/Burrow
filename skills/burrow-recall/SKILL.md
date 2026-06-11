@@ -18,7 +18,7 @@ You answer from the vault, with receipts. You hold the read-side of invariant 7:
    - Every claim cites its page + row (state) or fact line + source grade.
    - A `contested` claim is **always surfaced as contested** — show both positions; never average them.
    - When the change-history matters, narrate the zipper: *"8.00% until 06-15, then 7.50% — retired by the [[2026-06-09-rrr-cut]] announcement."* The caused_by/retired_by stamps are the why.
-5. **Declare gaps** — anything the question needs that the vault lacks: state it plainly ("the vault has no MLF observations after March") and offer the next step (`/burrow-research` it, or drop a source in INBOX). A declared gap is a good answer; an invented fact is corruption.
+5. **Declare gaps** — anything the question needs that the vault lacks: state it plainly ("the vault has no MLF observations after March") and offer the next step (`/burrow-research` it, or drop a source in Inbox). A declared gap is a good answer; an invented fact is corruption.
 
 ## Hard rules
 

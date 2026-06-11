@@ -67,10 +67,10 @@ cd your-vault && claude
 
 **4. Feed it**
 
-Drop anything into `INBOX/` — an article, a meeting note, a half-thought. Then:
+Drop anything into `Inbox/` — an article, a meeting note, a half-thought. Then:
 
 ```
-/burrow-ingest          # compile INBOX through the gate
+/burrow-ingest          # compile Inbox through the gate
 ```
 
 > Full walkthrough with the honest friction points (cron permissions, lite→engine migration, the two-week training phase): [docs/getting-started.md](docs/getting-started.md)
@@ -83,17 +83,18 @@ Drop anything into `INBOX/` — an article, a meeting note, a half-thought. Then
 
 ```bash
 # unattended, via OS cron (Obsidian has no background runtime — nobody's does):
-0 4 * * * cd /path/to/vault && claude -p "/burrow-routine" >> _burrow/cron.log 2>&1
+0 4 * * * cd /path/to/vault && claude -p "/burrow-routine" >> 08-Ops/runs/cron.log 2>&1
 ```
 
 **6. Watch the ledger earn trust**
 
 ```yaml
-# _burrow/gate-ledger.yaml — after two weeks of use it might look like:
-t0-merge:        { streak: 20, threshold: 20, status: auto }    # earned it
-new-node:        { streak: 12, threshold: 20, status: manual }  # getting there
-cross-domain-edge: { streak: 0,  threshold: 20, status: manual } # rejected 06-30, reset
-retirement:      { status: locked }   # changes to current world-state: never automatic
+# 08-Ops/approval-ledger.md (frontmatter) — after two weeks it might look like:
+gates:
+  - { id: t0-merge,          streak: 10, threshold: 10, state: auto }     # earned it
+  - { id: new-node,          streak: 12, threshold: 20, state: counting } # getting there
+  - { id: cross-domain-edge, streak: 0,  threshold: 20, state: counting } # rejected, reset
+  - { id: retirement,        state: locked }  # rewriting the present: never automatic
 ```
 
 ## Architecture: two layers, two modes
@@ -130,21 +131,23 @@ Burrow bundles **[auto-wiki](https://github.com/hanlinlibham/auto-wiki)** (v0.3,
 
 ```
 vault-template/
-├── Dashboard.md            # north-star metrics (Dataview)
-├── INBOX/                  # zero-friction capture — no rules here, ever
+├── CLAUDE.md               # the vault's agent contract: map, invariants, trigger phrases
+├── 00-Dashboard/           # the morning view — live Weasley clock, queue, ledger (Dataview)
+├── Inbox/                  # zero-friction capture — no rules here, ever
+├── 05-Daily/               # optional daily notes (dashboard todos read today's)
+├── 06-Templates/           # Research Note · Domain Ontology Contract
+├── 07-QA/                  # standing questions — one file each, append-only answers
+├── 08-Ops/                 # the engine room
+│   ├── approval-ledger.md  #   earned-autonomy bookkeeping (frontmatter gates)
+│   ├── routines/           #   agent contracts — frontmatter IS the permission
+│   ├── review/             #   candidate cards from unattended runs
+│   └── runs/               #   run records, one per revolution
 ├── wiki/                   # canonical knowledge — gate-only writes
-│   └── macro/              #   one example domain, fully worked
-├── _ontology/              # per-domain type criteria + controlled edge vocabulary
+│   ├── _index.md           #   domain registry (routing step 0)
+│   └── macro/              #   worked example: _ontology.md contract + typed pages
 ├── _protocols/             # the discipline, in prose (these ARE the prompts)
-│   ├── compilation-gate.md
-│   ├── six-tier-time.md
-│   ├── retirement.md
-│   └── lint.md
-└── _burrow/
-    ├── gate-ledger.yaml    # earned-autonomy bookkeeping
-    └── runs.md             # flywheel log, append-only
+└── .obsidian/              # the Burrow theme + dashboard.css snippet, pre-wired
 ```
-
 The protocols are deliberately written as plain prose with examples: **the protocol text is the prompt**. Editing the discipline = editing a markdown file.
 
 ## Invariants (violate any of these and it's not Burrow anymore)
@@ -159,11 +162,11 @@ The protocols are deliberately written as plain prose with examples: **the proto
 
 ## The control panel (prototype)
 
-The hero image above is the morning view we're building toward — a **Weasley clock** (each hand is an appliance; sectors are states: working / queued / idle / paused / anomaly), the flywheel trace, the review queue, and the trust ledger as a visible panel. Try the interactive HTML prototype: [docs/dashboard-prototype.html](docs/dashboard-prototype.html) — approve/reject cards and watch the ledger move; pause an appliance and watch its clock hand swing.
+The hero image above is the live morning view (`00-Dashboard/Dashboard.md`, Dataview) — a **Weasley clock** (each hand is an appliance; sectors are states: working / queued / idle / paused / anomaly), the flywheel trace, the review queue, and the trust ledger as a visible panel. Try the interactive HTML prototype: [docs/dashboard-prototype.html](docs/dashboard-prototype.html) — approve/reject cards and watch the ledger move; pause an appliance and watch its clock hand swing.
 
 ## Roadmap
 
-- [ ] Weasley-clock dashboard plugin (live appliance states — prototype above)
+- [x] Weasley-clock dashboard — shipped as a live Dataview view (`00-Dashboard/Dashboard.md`) with the bundled **Burrow Obsidian theme**, extracted from the author's daily-driver vault
 - [ ] `npx skills add burrow` packaging
 - [ ] Gap→research mappings for more domains
 - [ ] Multi-vault / team promotion tiers — this is what **Burrow Cloud** (hosted, multi-tenant) is for. Watch this space.

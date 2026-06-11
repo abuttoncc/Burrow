@@ -9,16 +9,16 @@ One run = one full revolution. Steps run in order; each step's failure is logged
 
 ## The revolution
 
-1. **Due questions.** Read `_burrow/questions.md` (create it with a starter template if missing: title / cadence weekly|monthly / recall scope / last_run). Collect questions whose cadence has elapsed.
+1. **Due questions.** Scan `07-QA/` — one file per question, frontmatter `mode / cadence / recall-scope / last-run / status`. Collect questions whose cadence has elapsed (or `status: due`). Empty folder → suggest creating one from `07-QA/README.md`'s contract and move on.
 2. **Per due question:**
    a. **Recall** — answer it from the vault only, via the burrow-recall discipline (provenance or gap, never confident silence).
-   b. **Review** — fetch the previous answer from `_burrow/answers/<question-slug>.md`; compare its forward-looking calls against what the vault now records. Mark each: held ✓ / missed ✗ / unresolved.
+   b. **Review** — read the question file's most recent answer block (its `## Answers` section is append-only, newest first); compare its forward-looking calls against what the vault now records. Mark each: held ✓ / missed ✗ / unresolved.
    c. **Project** — base / upside / downside, each with an explicit trigger condition (what T4 event would confirm it).
-   d. **Append** the answer block to `_burrow/answers/<question-slug>.md` — *append-only, never edit previous entries.* Include a one-line summary at top of the block for the Dashboard.
+   d. **Append** the new answer block at the top of the question file's `## Answers` section — *never edit previous entries* — then update frontmatter: `last-run`, `last-summary` (one line; the dashboard timeline reads it), `status: fresh`.
 3. **Lint** — run burrow-lint (structural pass always; semantic pass only if the run budget allows).
 4. **Research** — hand the Gap Report to burrow-research (its own budget applies).
 5. **Ingest** — burrow-ingest compiles whatever research brought home; ledger decides promote vs queue.
-6. **Log** — append one row to `_burrow/runs.md`: timestamp, trigger (manual/cron), applied/queued/rejected, gaps found/researched, notes.
+6. **Log** — create the run record `08-Ops/runs/YYYY-MM-DD-HHMM-routine.md` at start (`status: running`), complete it at the end: flywheel steps, applied/queued/rejected, gaps found/researched, budget spent.
 
 ## Reporting (the morning headline)
 
@@ -34,4 +34,4 @@ Ledger: new-node 12/20 · all others unchanged
 
 ## Unattended mode
 
-When invoked non-interactively (cron), never wait for input: anything requiring judgment goes to the review queue, and the run report is written to the top of `Dashboard.md` under a `## Last run` heading (replace that section only — it is the one mutable region the routine owns).
+When invoked non-interactively (cron), never wait for input: anything requiring judgment goes to the review queue, and the run record in `08-Ops/runs/` is the report — the dashboard reads it automatically.

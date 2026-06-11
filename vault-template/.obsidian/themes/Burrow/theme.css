@@ -1,0 +1,423 @@
+/* ============================================================
+   BURROW — vault theme v0.1
+   Paper-and-ink newsprint style, vault-wide: warm paper ground / ink text / hairlines /
+   three-font division (serif display · sans body · mono figures) / near-sharp corners /
+   color reserved for states and links. Design tokens shared with docs/dashboard-prototype.html
+   and snippets/dashboard.css.
+
+   Iron rules:
+   - no layout hacks (no masonry / no multi-column); layout belongs to the notes
+   - no emoji; icons only via Obsidian's built-in lucide line icons
+   ============================================================ */
+
+/* ── Design tokens ───────────────────────────────────────────── */
+body {
+  /* Fonts: display serif / body sans / mono */
+  --burrow-disp: "Fraunces", "Songti SC", "STSong", "Noto Serif SC", serif;
+  --burrow-sans: "Familjen Grotesk", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --burrow-mono: "IBM Plex Mono", "SF Mono", "JetBrains Mono", "Menlo", "Noto Sans Mono CJK SC", monospace;
+  --font-text-theme: var(--burrow-sans);
+  --font-interface-theme: var(--burrow-sans);
+  --font-monospace-theme: var(--burrow-mono);
+
+  /* Near-sharp corners */
+  --radius-s: 2px;
+  --radius-m: 3px;
+  --radius-l: 4px;
+  --radius-xl: 6px;
+
+  /* Heading scale (newsprint: strong contrast, tight leading) */
+  --h1-size: 1.7em;  --h1-weight: 900;
+  --h2-size: 1.25em; --h2-weight: 700;
+  --h3-size: 1.05em; --h3-weight: 700;
+  --h4-size: 0.95em; --h4-weight: 700;
+  --h5-size: 0.85em; --h5-weight: 700;
+  --h6-size: 0.8em;  --h6-weight: 600;
+  --heading-spacing: 1.6em;
+
+  --bold-weight: 700;
+}
+
+/* ── Light: paper & ink ─────────────────────────────────────────── */
+.theme-light {
+  --paper: #F5F2EA;
+  --paper-2: #EFEBE0;
+  --ink: #1B1812;
+  --ink-2: #5A5547;
+  --ink-3: #8E887A;
+  --hair: #D9D2C2;
+  --hair-2: #C9C1AD;
+  --burrow-red: #C8371F;
+  --burrow-red-deep: #A52C18;
+  --burrow-orange: #E55300;
+  --burrow-orange-deep: #C24600;
+  --burrow-green: #2F7D4E;
+  --burrow-amber: #B5851B;
+
+  --background-primary: var(--paper);
+  --background-primary-alt: var(--paper-2);
+  --background-secondary: var(--paper-2);
+  --background-secondary-alt: #E9E4D6;
+  --background-modifier-hover: rgba(255, 255, 255, 0.55);
+  --background-modifier-active-hover: rgba(229, 83, 0, 0.08);
+  --background-modifier-border: var(--hair);
+  --background-modifier-border-hover: var(--hair-2);
+  --background-modifier-border-focus: var(--ink);
+  --background-modifier-form-field: rgba(255, 255, 255, 0.6);
+
+  --text-normal: var(--ink);
+  --text-muted: var(--ink-2);
+  --text-faint: var(--ink-3);
+  --text-accent: var(--burrow-orange);
+  --text-accent-hover: var(--burrow-orange-deep);
+  --text-on-accent: var(--paper);
+  --text-selection: rgba(229, 83, 0, 0.16);
+  --text-highlight-bg: #F1E6CC;
+
+  --interactive-normal: var(--paper-2);
+  --interactive-hover: #E9E4D6;
+  --interactive-accent: var(--burrow-orange);
+  --interactive-accent-hover: var(--burrow-orange-deep);
+
+  --link-color: var(--ink);
+  --link-color-hover: var(--burrow-orange);
+  --link-external-color: var(--ink-2);
+  --link-external-color-hover: var(--burrow-orange);
+  --link-unresolved-color: var(--ink-3);
+  --link-decoration: none;
+  --link-external-decoration: none;
+
+  --hr-color: var(--hair);
+  --divider-color: var(--hair);
+  --blockquote-border-color: var(--ink);
+  --blockquote-color: var(--ink-2);
+  --code-background: var(--paper-2);
+  --code-normal: var(--ink-2);
+  --embed-border-left: 2px solid var(--ink);
+
+  --tag-background: transparent;
+  --tag-background-hover: var(--paper-2);
+  --tag-color: var(--ink-2);
+  --tag-color-hover: var(--burrow-orange);
+  --tag-border-color: var(--hair-2);
+  --tag-border-color-hover: var(--burrow-orange);
+
+  --checkbox-color: var(--burrow-orange);
+  --checkbox-color-hover: var(--burrow-orange-deep);
+  --checkbox-border-color: var(--ink-3);
+  --checkbox-border-color-hover: var(--ink);
+  --checklist-done-color: var(--ink-3);
+
+  --titlebar-background: var(--paper-2);
+  --titlebar-background-focused: var(--paper-2);
+  --titlebar-text-color: var(--ink-2);
+  --ribbon-background: var(--paper-2);
+  --status-bar-background: var(--paper-2);
+  --status-bar-text-color: var(--ink-3);
+  --status-bar-border-color: var(--hair);
+
+  --tab-background-active: var(--paper);
+  --tab-text-color: var(--ink-3);
+  --tab-text-color-active: var(--ink);
+  --tab-text-color-focused: var(--ink);
+  --tab-text-color-focused-active: var(--ink);
+  --tab-text-color-focused-active-current: var(--ink);
+  --tab-outline-color: var(--hair);
+
+  --nav-item-color: var(--ink-2);
+  --nav-item-color-hover: var(--ink);
+  --nav-item-color-active: var(--ink);
+  --nav-item-background-active: rgba(255, 255, 255, 0.7);
+  --nav-item-background-hover: rgba(255, 255, 255, 0.5);
+
+  --scrollbar-thumb-bg: rgba(27, 24, 18, 0.14);
+  --scrollbar-active-thumb-bg: rgba(27, 24, 18, 0.28);
+  --scrollbar-bg: transparent;
+
+  --table-header-background: transparent;
+  --table-header-background-hover: transparent;
+  --table-row-even-background: transparent;
+  --table-row-alt-background: rgba(255, 255, 255, 0.35);
+  --table-row-background-hover: rgba(229, 83, 0, 0.05);
+  --table-border-color: var(--hair);
+  --table-header-border-color: var(--hair-2);
+
+  --indentation-guide-color: var(--hair);
+  --indentation-guide-color-active: var(--hair-2);
+
+  --caret-color: var(--burrow-orange);
+  --icon-color: var(--ink-2);
+  --icon-color-hover: var(--ink);
+  --icon-color-active: var(--burrow-orange);
+  --icon-color-focused: var(--ink);
+}
+
+/* ── Dark: night ink (the same language, inverted) ─────────────────────────── */
+.theme-dark {
+  --paper: #1D1A14;
+  --paper-2: #242017;
+  --ink: #E8E1D0;
+  --ink-2: #B0A78F;
+  --ink-3: #7E7663;
+  --hair: #3A3426;
+  --hair-2: #4A4332;
+  --burrow-red: #D96A4F;
+  --burrow-red-deep: #E5826B;
+  --burrow-orange: #FF7A38;
+  --burrow-orange-deep: #FF9259;
+  --burrow-green: #6FAE8A;
+  --burrow-amber: #C99A3F;
+
+  --background-primary: var(--paper);
+  --background-primary-alt: var(--paper-2);
+  --background-secondary: #181510;
+  --background-secondary-alt: #14110D;
+  --background-modifier-hover: rgba(255, 255, 255, 0.04);
+  --background-modifier-active-hover: rgba(255, 122, 56, 0.1);
+  --background-modifier-border: var(--hair);
+  --background-modifier-border-hover: var(--hair-2);
+  --background-modifier-border-focus: var(--ink);
+  --background-modifier-form-field: rgba(255, 255, 255, 0.04);
+
+  --text-normal: var(--ink);
+  --text-muted: var(--ink-2);
+  --text-faint: var(--ink-3);
+  --text-accent: var(--burrow-orange);
+  --text-accent-hover: var(--burrow-orange-deep);
+  --text-on-accent: var(--paper);
+  --text-selection: rgba(255, 122, 56, 0.22);
+  --text-highlight-bg: rgba(201, 154, 63, 0.25);
+
+  --interactive-normal: var(--paper-2);
+  --interactive-hover: #2B2619;
+  --interactive-accent: var(--burrow-orange);
+  --interactive-accent-hover: var(--burrow-orange-deep);
+
+  --link-color: var(--ink);
+  --link-color-hover: var(--burrow-orange);
+  --link-external-color: var(--ink-2);
+  --link-external-color-hover: var(--burrow-orange);
+  --link-unresolved-color: var(--ink-3);
+  --link-decoration: none;
+  --link-external-decoration: none;
+
+  --hr-color: var(--hair);
+  --divider-color: var(--hair);
+  --blockquote-border-color: var(--ink);
+  --blockquote-color: var(--ink-2);
+  --code-background: var(--paper-2);
+  --code-normal: var(--ink-2);
+  --embed-border-left: 2px solid var(--ink);
+
+  --tag-background: transparent;
+  --tag-background-hover: var(--paper-2);
+  --tag-color: var(--ink-2);
+  --tag-color-hover: var(--burrow-orange);
+  --tag-border-color: var(--hair-2);
+  --tag-border-color-hover: var(--burrow-orange);
+
+  --checkbox-color: var(--burrow-orange);
+  --checkbox-color-hover: var(--burrow-orange-deep);
+  --checkbox-border-color: var(--ink-3);
+  --checkbox-border-color-hover: var(--ink);
+  --checklist-done-color: var(--ink-3);
+
+  --titlebar-background: #181510;
+  --titlebar-background-focused: #181510;
+  --titlebar-text-color: var(--ink-2);
+  --ribbon-background: #181510;
+  --status-bar-background: #181510;
+  --status-bar-text-color: var(--ink-3);
+  --status-bar-border-color: var(--hair);
+
+  --tab-background-active: var(--paper);
+  --tab-text-color: var(--ink-3);
+  --tab-text-color-active: var(--ink);
+  --tab-text-color-focused: var(--ink);
+  --tab-text-color-focused-active: var(--ink);
+  --tab-text-color-focused-active-current: var(--ink);
+  --tab-outline-color: var(--hair);
+
+  --nav-item-color: var(--ink-2);
+  --nav-item-color-hover: var(--ink);
+  --nav-item-color-active: var(--ink);
+  --nav-item-background-active: rgba(255, 255, 255, 0.05);
+  --nav-item-background-hover: rgba(255, 255, 255, 0.03);
+
+  --scrollbar-thumb-bg: rgba(232, 225, 208, 0.12);
+  --scrollbar-active-thumb-bg: rgba(232, 225, 208, 0.24);
+  --scrollbar-bg: transparent;
+
+  --table-header-background: transparent;
+  --table-header-background-hover: transparent;
+  --table-row-even-background: transparent;
+  --table-row-alt-background: rgba(255, 255, 255, 0.025);
+  --table-row-background-hover: rgba(255, 122, 56, 0.07);
+  --table-border-color: var(--hair);
+  --table-header-border-color: var(--hair-2);
+
+  --indentation-guide-color: var(--hair);
+  --indentation-guide-color-active: var(--hair-2);
+
+  --caret-color: var(--burrow-orange);
+  --icon-color: var(--ink-2);
+  --icon-color-hover: var(--ink);
+  --icon-color-active: var(--burrow-orange);
+  --icon-color-focused: var(--ink);
+}
+
+/* ── Paper grain: faint ledger ruling in reading view; editing view stays clean ── */
+.theme-light .markdown-preview-view {
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 119px, rgba(27, 24, 18, 0.02) 119px, rgba(27, 24, 18, 0.02) 120px);
+}
+
+/* ── Typography details ─────────────────────────────────────────────── */
+/* Selection: ink-paper inversion */
+.markdown-source-view ::selection,
+.markdown-preview-view ::selection {
+  background: var(--text-accent);
+  color: var(--background-primary);
+}
+
+/* Note title & H1: serif display */
+.inline-title,
+.markdown-preview-view h1,
+.markdown-rendered h1,
+.cm-header-1 {
+  font-family: var(--burrow-disp);
+  letter-spacing: 0.01em;
+}
+.inline-title { font-weight: 900; }
+
+/* H2: newsprint section rule */
+.markdown-preview-view h2,
+.markdown-rendered h2 {
+  padding-bottom: 0.25em;
+  border-bottom: 1.5px solid var(--text-normal);
+}
+
+/* H5/H6: mono small caps (column eyebrow) */
+.markdown-preview-view h5, .markdown-rendered h5,
+.markdown-preview-view h6, .markdown-rendered h6 {
+  font-family: var(--burrow-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Links: ink + hairline underline, red on hover */
+.markdown-preview-view a.internal-link,
+.markdown-rendered a.internal-link,
+.cm-hmd-internal-link .cm-underline {
+  text-decoration: underline;
+  text-decoration-color: var(--hair-2);
+  text-underline-offset: 3px;
+}
+.markdown-preview-view a.internal-link:hover,
+.markdown-rendered a.internal-link:hover {
+  text-decoration-color: var(--text-accent);
+}
+
+/* Blockquote: ink rule + serif italic */
+.markdown-preview-view blockquote,
+.markdown-rendered blockquote {
+  border-left: 2px solid var(--blockquote-border-color);
+  padding-left: 1em;
+  font-family: var(--burrow-disp);
+  font-style: italic;
+}
+
+/* HR: thin hairline */
+.markdown-preview-view hr, .markdown-rendered hr {
+  border: none;
+  border-top: 1px solid var(--hr-color);
+}
+
+/* Tables: newsprint — mono uppercase headers, horizontal rules only */
+.markdown-preview-view table, .markdown-rendered table { border-collapse: collapse; }
+.markdown-preview-view th, .markdown-rendered th {
+  font-family: var(--burrow-mono);
+  font-size: 0.74em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  border: none;
+  border-bottom: 1px solid var(--table-header-border-color);
+  background: transparent;
+}
+.markdown-preview-view td, .markdown-rendered td {
+  border: none;
+  border-bottom: 1px solid var(--table-border-color);
+}
+
+/* Code: one step below paper + hairline frame */
+.markdown-preview-view pre, .markdown-rendered pre {
+  background: var(--code-background);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius-m);
+}
+.markdown-preview-view :not(pre) > code,
+.markdown-rendered :not(pre) > code {
+  background: var(--code-background);
+  border-radius: var(--radius-s);
+  padding: 0.1em 0.35em;
+}
+
+/* Tags: mono thin-frame capsule */
+.tag, .cm-hashtag {
+  font-family: var(--burrow-mono);
+  font-size: 0.72em;
+  border: 1px solid var(--tag-border-color);
+  border-radius: 99px;
+  padding: 0.1em 0.6em;
+  background: var(--tag-background);
+}
+
+/* Checkboxes: square, near-sharp */
+input[type="checkbox"] { border-radius: 2px; }
+
+/* Callouts: flat paper card — translucent white + hairline frame + mono eyebrow */
+.callout {
+  background: var(--background-modifier-hover);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius-m);
+  mix-blend-mode: normal;
+}
+.callout-title {
+  font-family: var(--burrow-mono);
+  font-size: 0.78em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.callout-title-inner { font-weight: 600; }
+
+/* Embeds: left ink rule */
+.markdown-embed { border-left: var(--embed-border-left); border-radius: 0; }
+
+/* ── Workspace chrome ───────────────────────────────────────────── */
+/* Tab headers: small mono */
+.workspace-tab-header-inner-title {
+  font-family: var(--burrow-mono);
+  font-size: 0.82em;
+  letter-spacing: 0.02em;
+}
+/* Sidebar file tree: compact */
+.nav-file-title, .nav-folder-title { border-radius: var(--radius-s); }
+/* Status bar: mono */
+.status-bar { font-family: var(--burrow-mono); font-size: 0.72em; border-top: 1px solid var(--status-bar-border-color); }
+/* Pane dividers */
+.workspace-leaf-resize-handle { background: transparent; }
+.mod-root .workspace-tabs { border-color: var(--hair); }
+
+/* Search / inputs */
+input.prompt-input, .search-input-container input {
+  border-radius: var(--radius-s);
+  border: 1px solid var(--hair-2);
+}
+
+/* Graph: paper ground */
+.graph-view-container, .mod-global-graph .view-content { background: var(--background-primary); }

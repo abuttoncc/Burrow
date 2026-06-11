@@ -1,0 +1,366 @@
+/* ============================================================
+   BURROW — Dashboard · paper-and-ink newsprint style
+   Ported from the docs/dashboard-prototype.html design language:
+   warm paper + ledger ruling · three-font division (serif display / sans body / mono figures)
+   · hairlines · translucent white cards · color reserved for states.
+   The whole page is rendered by the single dataviewjs block in Dashboard.md into a .bw container;
+   this file is styles only; the three-column grid lives in .bw-grid.
+   Enable: Settings - Appearance - CSS snippets - dashboard
+   ============================================================ */
+
+/* ── Canvas: paper ground + ledger ruling, fills the pane ── */
+html body.obsidian-app .markdown-preview-view.dashboard {
+  --paper:#F5F2EA; --paper-2:#EFEBE0; --ink:#1B1812; --ink-2:#5A5547; --ink-3:#8E887A;
+  --hair:#D9D2C2; --hair-2:#C9C1AD;
+  --red:#C8371F; --red-soft:#F3DCD6;
+  --green:#2F7D4E; --green-soft:#DEEAE0;
+  --amber:#B5851B; --amber-soft:#F1E6CC;
+  --slate:#7A8694; --slate-soft:#E2E6E9;
+  --mono:'IBM Plex Mono','SF Mono','JetBrains Mono','Menlo','Noto Sans Mono CJK SC',monospace;
+  --sans:'Familjen Grotesk','PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;
+  --disp:'Fraunces','Songti SC','STSong','Noto Serif SC',serif;
+  background: var(--paper) !important;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 119px, rgba(27,24,18,.025) 119px, rgba(27,24,18,.025) 120px),
+    radial-gradient(ellipse 90% 60% at 50% -10%, #FBF9F3 0%, #F5F2EA 60%) !important;
+  color: var(--ink) !important;
+  padding: 0 12px !important;
+}
+/* Suppress masonry multi-column from other themes (else the page collapses into one narrow column) */
+html body.obsidian-app .markdown-preview-view.dashboard .markdown-preview-section {
+  columns: unset !important;
+  column-gap: unset !important;
+  column-count: unset !important;
+  column-width: unset !important;
+  display: block !important;
+}
+
+/* Release readable line width: sizer, its children, and the dataview container chain */
+html body.obsidian-app .markdown-preview-view.dashboard .markdown-preview-sizer,
+html body.obsidian-app .markdown-preview-view.dashboard .markdown-preview-sizer > div,
+html body.obsidian-app .markdown-preview-view.dashboard .block-language-dataviewjs,
+html body.obsidian-app .markdown-preview-view.dashboard .block-language-dataview {
+  max-width: none !important;
+  width: 100% !important;
+  margin-inline: 0 !important;
+}
+html body.obsidian-app .markdown-preview-view.dashboard .inline-title,
+html body.obsidian-app .markdown-preview-view.dashboard .metadata-container,
+html body.obsidian-app .markdown-preview-view.dashboard .frontmatter { display: none !important; }
+html body.obsidian-app .markdown-preview-view.dashboard .markdown-preview-pusher { display: none !important; }
+
+/* ── Container ── */
+.dashboard .bw { max-width: 1480px; margin: 0 auto; padding: 0 16px 60px; font-family: var(--sans); font-size: 15px; color: var(--ink); line-height: 1.45; }
+.dashboard .bw ::selection { background: var(--orange, #FF5C00); color: var(--paper); }
+.dashboard .bw a { color: inherit; text-decoration: none; cursor: pointer; }
+.dashboard .bw a:hover { color: var(--orange, #FF5C00); }
+
+/* ── Entrance ── */
+@keyframes bw-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.dashboard .bw .rv  { animation: bw-rise .55s cubic-bezier(.2,.7,.2,1) both; }
+.dashboard .bw .rv1 { animation-delay: .05s; } .dashboard .bw .rv2 { animation-delay: .14s; }
+.dashboard .bw .rv3 { animation-delay: .23s; } .dashboard .bw .rv4 { animation-delay: .32s; }
+.dashboard .bw .rv5 { animation-delay: .41s; } .dashboard .bw .rv6 { animation-delay: .5s; }
+
+/* ── masthead ── */
+.dashboard .bw .mast { display: flex; align-items: flex-end; justify-content: space-between; padding: 26px 0 16px; border-bottom: 2px solid var(--ink); }
+.dashboard .bw .brand { display: flex; align-items: baseline; gap: 14px; }
+.dashboard .bw .brand .zh { font-family: var(--disp); font-weight: 900; font-size: 2.1rem; letter-spacing: .01em; }
+.dashboard .bw .brand .latin { font-family: var(--disp); font-style: italic; font-weight: 400; font-size: 1.05rem; color: var(--ink-2); }
+.dashboard .bw .brand .badge { font-family: var(--mono); font-size: .68rem; border: 1px solid var(--ink); padding: 3px 8px; border-radius: 99px; letter-spacing: .08em; transform: translateY(-4px); }
+.dashboard .bw .head-right { text-align: right; }
+.dashboard .bw .head-right .date { font-family: var(--mono); font-size: .78rem; color: var(--ink-2); letter-spacing: .05em; }
+.dashboard .bw .head-right .morning { font-size: .95rem; margin-top: 4px; }
+.dashboard .bw .head-right .morning b { border-bottom: 2px solid var(--red); font-weight: 700; }
+
+/* ── North-star strip ── */
+.dashboard .bw .nstrip { display: grid; grid-template-columns: repeat(5, 1fr); border-bottom: 1px solid var(--hair-2); margin-bottom: 26px; }
+.dashboard .bw .ncell { padding: 16px 18px 14px; border-left: 1px solid var(--hair-2); cursor: pointer; transition: background .2s; }
+.dashboard .bw .ncell:first-child { border-left: none; padding-left: 2px; }
+.dashboard .bw .ncell:hover { background: rgba(255,255,255,.55); }
+.dashboard .bw .ncell .lbl { font-size: .7rem; letter-spacing: .14em; color: var(--ink-3); text-transform: uppercase; font-weight: 600; }
+.dashboard .bw .ncell .val { font-family: var(--mono); font-size: 1.9rem; font-weight: 600; line-height: 1.15; margin-top: 5px; font-variant-numeric: tabular-nums; }
+.dashboard .bw .ncell .val small { font-size: .85rem; color: var(--ink-3); font-weight: 400; }
+.dashboard .bw .ncell .sub { font-size: .74rem; margin-top: 2px; color: var(--ink-2); }
+.dashboard .bw .delta-up { color: var(--green); font-family: var(--mono); font-size: .85rem; }
+.dashboard .bw .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; transform: translateY(-1px); }
+.dashboard .bw .dot.g { background: var(--green); } .dashboard .bw .dot.a { background: var(--amber); }
+.dashboard .bw .dot.r { background: var(--red); }   .dashboard .bw .dot.s { background: var(--slate); }
+.dashboard .bw .dot.p { background: var(--hair-2); border: 1px solid var(--ink-3); }
+@keyframes bw-pp { 0%,100% { box-shadow: 0 0 0 0 rgba(200,55,31,.45); } 50% { box-shadow: 0 0 0 6px rgba(200,55,31,0); } }
+.dashboard .bw .pulse { animation: bw-pp 2s ease-in-out infinite; }
+
+/* ── Main grid: 430 | 1fr | 400 (collapses on narrow panes) ── */
+.dashboard .bw .bw-grid { display: grid; grid-template-columns: minmax(340px,430px) minmax(0,1fr) minmax(310px,400px); gap: 26px; align-items: start; }
+@media (max-width: 1500px) { .dashboard .bw .bw-grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); } .dashboard .bw .col3 { grid-column: 1 / -1; } }
+@media (max-width: 980px)  { .dashboard .bw .bw-grid { grid-template-columns: 1fr; } }
+.dashboard .bw .col { display: flex; flex-direction: column; gap: 26px; min-width: 0; }
+
+/* ── Section cards ── */
+.dashboard .bw .sec { background: rgba(255,255,255,.5); border: 1px solid var(--hair); border-radius: 3px; }
+.dashboard .bw .sec-h { display: flex; justify-content: space-between; align-items: baseline; padding: 13px 16px 11px; border-bottom: 1px solid var(--hair); }
+.dashboard .bw .sec-h h2 { font-size: .93rem; font-weight: 700; letter-spacing: .02em; margin: 0; border: none; color: var(--ink); }
+.dashboard .bw .sec-h h2 .no { font-family: var(--mono); color: var(--red); font-size: .78rem; margin-right: 8px; }
+.dashboard .bw .sec-h .meta { font-family: var(--mono); font-size: .68rem; color: var(--ink-3); letter-spacing: .05em; }
+
+/* ── The clock ── */
+.dashboard .bw .clockbox { padding: 18px 14px 8px; text-align: center; }
+.dashboard .bw .clock-svg { width: 100%; max-width: 330px; }
+.dashboard .bw .sector-label { font-family: var(--sans); font-size: 11.5px; font-weight: 600; fill: var(--ink-2); }
+.dashboard .bw .hand { transition: transform 1.1s cubic-bezier(.3,1.3,.35,1); }
+.dashboard .bw .hand line { stroke-linecap: round; }
+.dashboard .bw .hand .tip { font-family: var(--mono); font-size: 10px; font-weight: 600; fill: #fff; }
+.dashboard .bw .clock-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; justify-content: center; padding: 8px 10px 14px; font-size: .74rem; color: var(--ink-2); }
+.dashboard .bw .clock-legend span b { font-family: var(--mono); font-weight: 600; color: var(--ink); }
+.dashboard .bw .clock-legend .dot { width: 7px; height: 7px; margin: 0 0 0 4px; }
+
+/* ── Agent list ── */
+.dashboard .bw .appl { width: 100%; border-collapse: collapse; }
+.dashboard .bw .appl td { padding: 10px 10px; border-top: 1px solid var(--hair); font-size: .82rem; vertical-align: middle; }
+.dashboard .bw .appl tr:first-child td { border-top: none; }
+.dashboard .bw .appl tr { transition: background .2s; }
+.dashboard .bw .appl tr:hover { background: rgba(255,255,255,.7); }
+.dashboard .bw .appl tr.anomaly { background: linear-gradient(90deg, var(--red-soft), transparent 70%); }
+.dashboard .bw .a-name { font-weight: 700; white-space: nowrap; }
+.dashboard .bw .a-name small { display: block; font-weight: 400; color: var(--ink-3); font-size: .68rem; font-family: var(--mono); margin-top: 1px; }
+.dashboard .bw .a-state { font-size: .74rem; white-space: nowrap; }
+.dashboard .bw .a-out { color: var(--ink-2); font-size: .74rem; line-height: 1.45; }
+.dashboard .bw .a-out .ctr { font-family: var(--mono); font-size: .62rem; color: var(--ink-3); }
+
+/* ── Flywheel ── */
+.dashboard .bw .fly { padding: 6px 0; }
+.dashboard .bw .step { display: grid; grid-template-columns: 56px 22px 1fr auto; gap: 0 10px; padding: 9px 16px; align-items: baseline; border-top: 1px dashed var(--hair); }
+.dashboard .bw .step:first-child { border-top: none; }
+.dashboard .bw .step .t { font-family: var(--mono); font-size: .72rem; color: var(--ink-3); }
+.dashboard .bw .step .mark { font-family: var(--mono); font-size: .8rem; text-align: center; }
+.dashboard .bw .step .what { font-size: .84rem; }
+.dashboard .bw .step .what small { color: var(--ink-3); font-size: .73rem; margin-left: 6px; }
+.dashboard .bw .step .n { font-family: var(--mono); font-size: .74rem; color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dashboard .bw .step.fail { background: var(--red-soft); }
+.dashboard .bw .step.fail .what { font-weight: 700; }
+.dashboard .bw .runmeta { padding: 8px 16px 10px; border-top: 1px solid var(--hair); font-family: var(--mono); font-size: .68rem; color: var(--ink-3); }
+.dashboard .bw .runmeta a { text-decoration: underline; text-decoration-color: var(--hair-2); text-underline-offset: 2px; }
+
+/* ── QA timeline ── */
+.dashboard .bw .qa { padding: 4px 0; }
+.dashboard .bw .qa-item { display: grid; grid-template-columns: 74px 14px 1fr; gap: 0 12px; padding: 11px 16px; border-top: 1px solid var(--hair); cursor: pointer; transition: background .2s; }
+.dashboard .bw .qa-item:hover { background: rgba(255,255,255,.7); }
+.dashboard .bw .qa-item:first-child { border-top: none; }
+.dashboard .bw .qa-item .d { font-family: var(--mono); font-size: .72rem; color: var(--ink-3); padding-top: 2px; }
+.dashboard .bw .qa-item .rail { position: relative; }
+.dashboard .bw .qa-item .rail::before { content: ''; position: absolute; left: 5px; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--ink); }
+.dashboard .bw .qa-item .rail::after { content: ''; position: absolute; left: 7px; top: 16px; bottom: -14px; width: 1px; background: var(--hair-2); }
+.dashboard .bw .qa-item:last-child .rail::after { display: none; }
+.dashboard .bw .qa-item h4 { font-size: .84rem; font-weight: 600; line-height: 1.5; margin: 0; }
+.dashboard .bw .qa-item .verdict { font-family: var(--mono); font-size: .68rem; margin-top: 3px; }
+.dashboard .bw .v-hit { color: var(--green); } .dashboard .bw .v-wait { color: var(--amber); }
+.dashboard .bw .qa-item .q { color: var(--ink-3); font-size: .7rem; margin-top: 2px; }
+
+/* ── Review queue ── */
+.dashboard .bw .queue { padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; }
+.dashboard .bw .qcard { border: 1px solid var(--hair-2); background: #FDFCF8; border-radius: 3px; padding: 12px 13px; }
+.dashboard .bw .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.dashboard .bw .chip { font-family: var(--mono); font-size: .62rem; letter-spacing: .08em; padding: 2px 7px; border-radius: 2px; font-weight: 600; }
+.dashboard .bw .chip.new    { background: var(--amber-soft); color: #7A5A0E; border: 1px solid #D9BE83; }
+.dashboard .bw .chip.retire { background: var(--red-soft); color: var(--red); border: 1px solid #DBA396; }
+.dashboard .bw .chip.disp   { background: var(--slate-soft); color: #44505E; border: 1px solid #B9C2CB; }
+.dashboard .bw .chip.edge   { background: var(--green-soft); color: var(--green); border: 1px solid #A8C9B2; }
+.dashboard .bw .gatehint { font-family: var(--mono); font-size: .64rem; color: var(--ink-3); }
+.dashboard .bw .qcard h3 { font-size: .88rem; font-weight: 700; margin: 0 0 5px; border: none; color: var(--ink); }
+.dashboard .bw .qcard .diff { font-family: var(--mono); font-size: .72rem; line-height: 1.7; background: var(--paper-2); border: 1px solid var(--hair); padding: 7px 10px; border-radius: 2px; margin-bottom: 7px; }
+.dashboard .bw .qcard .src { font-size: .68rem; color: var(--ink-3); }
+.dashboard .bw .qhint { padding: 0 16px 12px; font-size: .72rem; color: var(--ink-2); }
+.dashboard .bw .qempty { text-align: center; padding: 26px 10px; color: var(--ink-3); font-size: .85rem; }
+.dashboard .bw .qempty .big { font-family: var(--disp); font-style: italic; font-size: 1.3rem; color: var(--ink-2); margin-bottom: 4px; }
+
+/* ── Approval ledger ── */
+.dashboard .bw .gates { padding: 6px 16px 14px; }
+.dashboard .bw .gate { padding: 10px 0; border-top: 1px dashed var(--hair); }
+.dashboard .bw .gate:first-child { border-top: none; }
+.dashboard .bw .gate-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+.dashboard .bw .gate-top .gn { font-size: .8rem; font-weight: 600; }
+.dashboard .bw .gate-top .gs { font-family: var(--mono); font-size: .7rem; font-variant-numeric: tabular-nums; }
+.dashboard .bw .gs.auto { color: var(--green); font-weight: 600; } .dashboard .bw .gs.lock { color: var(--ink-3); }
+.dashboard .bw .gbar { height: 7px; background: var(--paper-2); border: 1px solid var(--hair-2); border-radius: 99px; overflow: hidden; }
+.dashboard .bw .gbar i { display: block; height: 100%; background: repeating-linear-gradient(135deg, var(--ink-2) 0 4px, var(--ink-3) 4px 8px); }
+.dashboard .bw .gbar.full i { background: var(--green); }
+.dashboard .bw .gbar.locked i { background: repeating-linear-gradient(135deg, var(--hair-2) 0 4px, transparent 4px 8px); width: 100%; }
+.dashboard .bw .gate .note { font-size: .66rem; color: var(--ink-3); margin-top: 4px; font-family: var(--mono); }
+
+/* ── Console ── */
+.dashboard .bw .conbox { padding: 12px 14px 14px; }
+.dashboard .bw .conrow { display: flex; flex-wrap: wrap; gap: 8px; }
+.dashboard .bw .conrow button { font-family: var(--sans); font-size: .78rem; font-weight: 700; padding: 7px 13px; border-radius: 2px; cursor: pointer; border: 1px solid var(--ink); background: transparent; color: var(--ink); transition: all .15s; }
+.dashboard .bw .conrow button:hover { background: var(--ink); color: var(--paper); }
+.dashboard .bw .conrow button.primary { background: var(--ink); color: var(--paper); }
+.dashboard .bw .conrow button.primary:hover { background: var(--red); border-color: var(--red); }
+.dashboard .bw .connote { font-size: .68rem; color: var(--ink-3); margin-top: 8px; }
+.dashboard .bw .contasks { margin-top: 10px; border-top: 1px dashed var(--hair); padding-top: 8px; font-size: .8rem; }
+.dashboard .bw .contasks .tk { padding: 3px 0; color: var(--ink-2); }
+.dashboard .bw .contasks .tk::before { content: '□ '; font-family: var(--mono); color: var(--ink-3); }
+
+/* ── footer ── */
+.dashboard .bw .foot { margin-top: 34px; padding-top: 14px; border-top: 2px solid var(--ink); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-family: var(--mono); font-size: .66rem; color: var(--ink-3); letter-spacing: .06em; }
+.dashboard .bw .foot .inv { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* ============================================================
+   v5.1 · HLB orange fusion
+   Orange = brand/structure accent (badges / title em / section numbers / report underline);
+   red stays reserved for states (anomaly / pending / retirement). This block is an overlay.
+   ============================================================ */
+html body.obsidian-app .markdown-preview-view.dashboard {
+  --orange: #FF5C00;
+  --orange-10: rgba(255, 92, 0, 0.08);
+  --orange-25: rgba(255, 92, 0, 0.25);
+}
+
+/* Masthead: left badge+title+greeting+report · center ontology counts · right date */
+.dashboard .bw .mast { align-items: flex-end; gap: 26px; border-bottom: 1px solid var(--hair-2); padding-bottom: 14px; }
+.dashboard .bw .brand { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.dashboard .bw .brand .badge {
+  font-family: var(--mono); font-size: .66rem; letter-spacing: .18em;
+  padding: 4px 11px; border-radius: 0; transform: none;
+  border: 1px solid var(--orange-25); background: var(--orange-10); color: var(--orange);
+}
+.dashboard .bw .brand .big {
+  font-family: var(--mono); font-weight: 800; font-size: 2.7rem;
+  letter-spacing: -0.02em; line-height: 0.95; text-transform: uppercase; color: var(--ink);
+}
+.dashboard .bw .brand .big em { font-style: italic; color: var(--orange); }
+.dashboard .bw .brand .greet { font-family: var(--mono); font-size: .74rem; color: var(--ink-3); letter-spacing: .05em; }
+.dashboard .bw .brand .morning { font-size: .85rem; color: var(--ink-2); }
+.dashboard .bw .brand .morning b { border-bottom: 2px solid var(--orange); font-weight: 700; color: var(--ink); }
+.dashboard .bw .mast-mid { flex: 1 1 auto; align-self: flex-end; display: flex; flex-direction: column; gap: 8px; border-left: 1px solid var(--hair); padding: 4px 0 2px 26px; min-width: 0; }
+.dashboard .bw .mast-mid .mlbl { font-family: var(--mono); font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+.dashboard .bw .mast-mid .types { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .84rem; color: var(--ink-2); }
+.dashboard .bw .mast-mid .types .ht b { color: var(--ink); font-weight: 700; margin-left: 3px; }
+.dashboard .bw .hchip { align-self: flex-start; font-family: var(--mono); font-size: .66rem; letter-spacing: .06em; padding: 2px 9px; border: 1px solid; }
+.dashboard .bw .hchip.ok { color: #2F7D4E; border-color: rgba(47,125,78,.4); background: rgba(47,125,78,.07); }
+.dashboard .bw .hchip.warn { color: var(--red); border-color: rgba(200,55,31,.35); background: var(--red-soft); }
+
+/* North-star strip hugs the nav row */
+.dashboard .bw .nstrip { margin-bottom: 0; }
+
+/* Nav row: links left · 'exceptions first' black pill chain right */
+.dashboard .bw .navrow { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 16px; padding: 12px 2px 4px; margin-bottom: 18px; }
+.dashboard .bw .navlinks { font-family: var(--mono); font-size: .74rem; letter-spacing: .06em; }
+.dashboard .bw .navlinks a { color: var(--ink-2); }
+.dashboard .bw .navlinks a:hover { color: var(--orange); }
+.dashboard .bw .navlinks .sep { margin: 0 10px; color: var(--hair-2); }
+.dashboard .bw .flow { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: .64rem; }
+.dashboard .bw .flow .flbl { color: var(--ink-3); letter-spacing: .16em; margin-right: 4px; }
+.dashboard .bw .flow .flowchip { background: var(--ink); color: var(--paper); padding: 3px 10px; font-weight: 600; letter-spacing: .08em; }
+.dashboard .bw .flow .arr { color: var(--ink-3); }
+
+/* Section titles to orange (number + title); meta stays muted */
+.dashboard .bw .sec-h h2 { color: var(--orange); }
+.dashboard .bw .sec-h h2 .no { color: var(--orange); }
+
+/* ── v5.2 · console moves into the nav row; todos get their own subsection ── */
+.dashboard .bw .navrow .conrow { display: flex; flex-wrap: wrap; gap: 8px; }
+.dashboard .bw .navrow .conrow button { padding: 5px 12px; font-size: .74rem; }
+.dashboard .bw .conbox .contasks:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+
+/* ── v5.3 · console button three-state: primary backlog / done today / fired ── */
+.dashboard .bw .conrow button.done { border-color: rgba(47,125,78,.45); color: #2F7D4E; background: rgba(47,125,78,.06); }
+.dashboard .bw .conrow button.done:hover { background: #2F7D4E; border-color: #2F7D4E; color: var(--paper); }
+.dashboard .bw .conrow button.fired { opacity: .55; pointer-events: auto; }
+
+/* ── v5.4 · capture (Inbox entry point) inlined mid-nav-row ── */
+.dashboard .bw .navrow { gap: 8px 14px; }
+.dashboard .bw .navrow .cap { display: flex; flex: 1 1 260px; min-width: 200px; gap: 6px; }
+.dashboard .bw .navrow .capin {
+  flex: 1 1 auto; min-width: 0;
+  font-family: var(--mono); font-size: .76rem;
+  padding: 5px 10px; border: 1px solid var(--hair-2); border-radius: 2px;
+  background: rgba(255,255,255,.6); color: var(--ink); outline: none;
+  transition: border-color .15s;
+}
+.theme-dark .dashboard .bw .navrow .capin { background: rgba(255,255,255,.04); }
+.dashboard .bw .navrow .capin:focus { border-color: var(--orange); }
+.dashboard .bw .navrow .capin::placeholder { color: var(--ink-3); }
+.dashboard .bw .navrow .capgo {
+  font-family: var(--sans); font-size: .74rem; font-weight: 700;
+  padding: 5px 12px; border-radius: 2px; cursor: pointer;
+  border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+  transition: all .15s;
+}
+.dashboard .bw .navrow .capgo:hover { background: var(--orange); border-color: var(--orange); }
+
+/* ── v5.5 · top-right: date + nav entries fill the masthead right column ── */
+.dashboard .bw .head-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; align-self: stretch; gap: 10px; }
+.dashboard .bw .head-right .date { padding-top: 4px; }
+.dashboard .bw .head-right .navlinks { white-space: nowrap; }
+.dashboard .bw .navrow { justify-content: flex-start; }
+
+/* ── v5.6 · brand block compressed: badge on the title baseline; greeting+report on one line ── */
+.dashboard .bw .mast { padding: 14px 0 12px; }
+.dashboard .bw .brand { gap: 5px; }
+.dashboard .bw .brand .brandrow { display: flex; align-items: baseline; gap: 12px; }
+.dashboard .bw .brand .subline { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; }
+
+/* ── v5.7 · masthead compressed again: sans title; THE BURROW drops to line two as an eyebrow;
+   pending badge merges with the date on the right column's second line ── */
+.dashboard .bw .brand .big { font-family: var(--sans); letter-spacing: -0.01em; }
+.dashboard .bw .subline .bbadge { font-family: var(--mono); font-size: .66rem; letter-spacing: .22em; color: var(--orange); }
+.dashboard .bw .head-right .hr-bot { display: flex; align-items: baseline; gap: 12px; }
+.dashboard .bw .head-right .hr-bot .hchip { align-self: auto; }
+.dashboard .bw .head-right .date { padding-top: 0; }
+
+/* ── v5.8 · top-left shrink: title one size down; VAULT to serif italic;
+   ontology counts lose the rule and shift left ── */
+.dashboard .bw .brand .big { font-size: 1.9rem; }
+.dashboard .bw .brand .big em {
+  font-family: var(--disp), Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.dashboard .bw .mast { gap: 18px; }
+.dashboard .bw .mast-mid { border-left: none; padding-left: 0; }
+
+/* ── v5.9 · VAULT and the empty-state line (All quiet at the Burrow.) share a font:
+   --disp serif stack + italic + regular weight, identical rendering path ── */
+.dashboard .bw .brand .big em {
+  font-family: var(--disp);
+  font-weight: 400;
+}
+
+/* ============================================================
+   v6.1 · refinement pass (three losses vs the old HLB hero, restored)
+   1. mono typesetting returns: the dashboard goes mono throughout,
+      restoring the typewriter character-grid, technical-editorial feel
+   2. scale contrast restored: title and north-star figures enlarged — big type over small notes
+   3. accent restored: THE BURROW back in the orange boxed chip
+   ============================================================ */
+.dashboard .bw { font-family: var(--mono); }
+.dashboard .bw .sec-h h2 { font-family: var(--mono); letter-spacing: .06em; }
+.dashboard .bw .conrow button, .dashboard .bw .navrow .capgo { font-family: var(--mono); font-weight: 600; }
+.dashboard .bw .qcard h3, .dashboard .bw .qa-item h4, .dashboard .bw .gate-top .gn { font-family: var(--mono); }
+
+/* Title: heavy mono one size up; VAULT stays Fraunces italic (the font collision is the accent) */
+.dashboard .bw .brand .big { font-family: var(--mono); font-size: 2.4rem; font-weight: 800; letter-spacing: -0.03em; }
+.dashboard .bw .brand .big em { font-family: var(--disp); font-weight: 400; letter-spacing: 0; }
+
+/* THE BURROW back to a boxed chip (no extra line; still leads line two) */
+.dashboard .bw .subline .bbadge {
+  border: 1px solid var(--orange-25);
+  background: var(--orange-10);
+  padding: 2px 9px;
+  letter-spacing: .18em;
+}
+
+/* North star: figures enlarged, label tracking widened — big-vs-small tension */
+.dashboard .bw .ncell .val { font-size: 2.2rem; }
+.dashboard .bw .ncell .lbl { letter-spacing: .18em; }
+
+/* A little breathing room back into the masthead */
+.dashboard .bw .mast { padding: 18px 0 14px; }
+
+/* ── v6.2 · full interactivation: everything clickable gets cursor + hover feedback ── */
+.dashboard .bw [data-href], .dashboard .bw [data-search] { cursor: pointer; }
+.dashboard .bw .morning b[data-href]:hover { color: var(--orange); }
+.dashboard .bw .ht[data-search]:hover, .dashboard .bw .ht[data-search]:hover b { color: var(--orange); }
+.dashboard .bw .sec-h[data-href]:hover .meta { color: var(--orange); }
+.dashboard .bw .a-tgl .tgl { font-family: var(--mono); font-size: .66rem; border: 1px solid var(--hair-2); padding: 1px 7px; color: var(--ink-3); cursor: pointer; white-space: nowrap; }
+.dashboard .bw .a-tgl .tgl:hover { border-color: var(--orange); color: var(--orange); }
+.dashboard .bw .tk[data-tline]:hover { color: var(--orange); }

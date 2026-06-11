@@ -30,8 +30,8 @@ Sample ≤ 40 pages, least-recently-checked first: cross-page contradictions, si
 
 ## Gap Report
 
-Emit `_burrow/gap-report.md` in the YAML shape defined in `_protocols/lint.md`, priority-sorted. Phrase each researchable gap as a concrete `research_question`. Non-researchable defects (orphans, broken links) → list as fix-tasks for the review queue instead.
+Emit `08-Ops/gap-report.md` in the YAML shape defined in `_protocols/lint.md`, priority-sorted. Phrase each researchable gap as a concrete `research_question`. Non-researchable defects (orphans, broken links) → list as fix-tasks for the review queue instead.
 
 ## Report
 
-Headline: health score + delta vs the last run (find it in `_burrow/runs.md`). Then defects grouped by type, then the gap count by priority. One screen, no padding.
+Headline: health score + delta vs the last run (find it in the latest record under `08-Ops/runs/`). Then defects grouped by type, then the gap count by priority. One screen, no padding.
