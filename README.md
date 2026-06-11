@@ -93,7 +93,7 @@ retirement:      { status: locked }   # changes to current world-state: never au
 └───────────────────────────────────────────────────────────┘
 ```
 
-Burrow bundles **[auto-wiki](https://github.com/hanlinlibham/auto-wiki)** (v0.2, `skills/auto-wiki/`) as its compilation engine — the engine decides *how* knowledge compiles; the ledger decides *who may apply it*. Two modes:
+Burrow bundles **[auto-wiki](https://github.com/hanlinlibham/auto-wiki)** (v0.3, `skills/auto-wiki/`) as its compilation engine — the engine decides *how* knowledge compiles; the ledger decides *who may apply it*. Two modes:
 
 - **Lite (zero dependencies)** — skip `skills/auto-wiki/`; the gate runs the pure-markdown protocols in `_protocols/`. Any agent, no Python.
 - **Engine (full strength)** — install `skills/auto-wiki/` too (needs Python 3.8+ and `pip install pydantic`); you gain SQLite bitemporal storage (`data.db`), frontmatter schema validation, domain seeds (e.g. FIBO pensions), logic validators, and BM25 scaling for large vaults.

@@ -51,7 +51,7 @@ cd your-vault && claude
 
 ## 架构：两层，两档
 
-Burrow 内置 **[auto-wiki](https://github.com/hanlinlibham/auto-wiki)**（v0.2，`skills/auto-wiki/`）作为编译引擎——**引擎决定知识怎么编译，账本决定谁有权落地**：
+Burrow 内置 **[auto-wiki](https://github.com/hanlinlibham/auto-wiki)**（v0.3，`skills/auto-wiki/`）作为编译引擎——**引擎决定知识怎么编译，账本决定谁有权落地**：
 
 - **Lite 档（零依赖）**——不装引擎，闸门按 `_protocols/` 的纯 markdown 协议运行，任何 agent 可跑
 - **引擎档（完全体）**——装上 `skills/auto-wiki/`（Python 3.8+ 与 `pip install pydantic`），获得 SQLite 双时态存储（data.db）、frontmatter schema 校验、领域种子（如 FIBO 年金）、逻辑校验器、大库 BM25 检索

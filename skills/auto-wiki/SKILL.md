@@ -1,6 +1,6 @@
 ---
 name: auto-wiki
-version: 0.2.0
+version: 0.3.0
 description: |
   知识编译器：教 Agent 把源文件增量编译进持久化 wiki，实现跨会话知识积累。
   运行时依赖：Python 3.8+（标准库 + pydantic）。可选增强：WebSearch（主动搜索）、外部 MCP 校验器（逻辑校验）。
