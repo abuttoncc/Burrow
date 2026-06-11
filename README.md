@@ -4,7 +4,7 @@
 >
 > *In the Weasley house, the knitting needles knit by themselves and the pan flips its own eggs. None of them has free will — each is enchanted within a narrow scope, and Mrs. Weasley decides what gets knitted. Your vault deserves the same: agents that work all night, a gate they cannot bypass, and trust they have to earn.*
 
-[简体中文](README.zh-CN.md) · [Design Philosophy](docs/philosophy.md) · [Skills](#skills) · [Vault Template](#vault-template)
+[简体中文](README.zh-CN.md) · [Getting Started](docs/getting-started.md) · [Design Philosophy](docs/philosophy.md) · [Skills](#skills) · [Vault Template](#vault-template)
 
 <p align="center"><img src="docs/dashboard-prototype.png" alt="The Burrow control panel: Weasley clock, appliance list, flywheel trace, review queue, trust gates" width="920"></p>
 <p align="center"><sub>The morning view — a Weasley clock of appliance states, the overnight flywheel trace, your review queue, and the trust ledger. <a href="docs/dashboard-prototype.html">Interactive prototype →</a></sub></p>
@@ -59,7 +59,13 @@ cp -r Burrow/skills/* your-vault/.claude/skills/
 cd your-vault && claude
 ```
 
-**3. Feed it**
+**3. Let it walk you in**
+
+```
+/burrow-init            # guided setup: scaffold check → domain contract interview → first questions
+```
+
+**4. Feed it**
 
 Drop anything into `INBOX/` — an article, a meeting note, a half-thought. Then:
 
@@ -67,7 +73,9 @@ Drop anything into `INBOX/` — an article, a meeting note, a half-thought. Then
 /burrow-ingest          # compile INBOX through the gate
 ```
 
-**4. Morning ritual** (or wire it to cron)
+> Full walkthrough with the honest friction points (cron permissions, lite→engine migration, the two-week training phase): [docs/getting-started.md](docs/getting-started.md)
+
+**5. Morning ritual** (or wire it to cron)
 
 ```
 /burrow-routine         # recall → review → lint → research gaps → ingest → report
@@ -78,7 +86,7 @@ Drop anything into `INBOX/` — an article, a meeting note, a half-thought. Then
 0 4 * * * cd /path/to/vault && claude -p "/burrow-routine" >> _burrow/cron.log 2>&1
 ```
 
-**5. Watch the ledger earn trust**
+**6. Watch the ledger earn trust**
 
 ```yaml
 # _burrow/gate-ledger.yaml — after two weeks of use it might look like:
@@ -110,6 +118,7 @@ Burrow bundles **[auto-wiki](https://github.com/hanlinlibham/auto-wiki)** (v0.3,
 | Skill | Role | Writes? |
 |---|---|---|
 | `auto-wiki` | **The engine** (bundled): ingest/recall/query/lint/deep-dive compilation core | via the gate only |
+| `burrow-init` | **The housewarming.** Scaffold check → mode detection → domain-contract interview → first standing questions | scaffold + contract drafts |
 | `burrow-ingest` | **The gate.** Route → extract → six-tier adjudication → vocab check → stage → promote/queue | the only one that writes `wiki/` |
 | `burrow-gate` | Review queue + ledger bookkeeping. Approve / reject / mark contested; updates streaks | ledger + staged items |
 | `burrow-lint` | Health check: orphans, broken links, out-of-vocab edges, contested, staleness → Gap Report | report only |
