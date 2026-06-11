@@ -143,9 +143,17 @@ The protocols are deliberately written as plain prose with examples: **the proto
 6. **Autonomy is earned** — auto-promotion requires a clean streak; one rejection demotes.
 7. **Answers carry provenance** — recall cites or reports a gap; it never fills silence with confidence.
 
+## The control panel (prototype)
+
+The morning view we're building toward — a **Weasley clock** (each hand is an appliance, sectors are states: working / queued / idle / paused / anomaly), the flywheel trace, the review queue, and the trust ledger as a visible panel:
+
+<p align="center"><img src="docs/dashboard-prototype.png" alt="Burrow dashboard prototype: Weasley clock, appliance list, flywheel trace, review queue, trust gates" width="900"></p>
+
+Interactive HTML prototype: [docs/dashboard-prototype.html](docs/dashboard-prototype.html) — approve/reject cards and watch the ledger move; pause an appliance and watch its clock hand swing.
+
 ## Roadmap
 
-- [ ] Weasley-clock dashboard plugin (live appliance states — see [the HTML prototype](docs/dashboard-prototype.html))
+- [ ] Weasley-clock dashboard plugin (live appliance states — prototype above)
 - [ ] `npx skills add burrow` packaging
 - [ ] Gap→research mappings for more domains
 - [ ] Multi-vault / team promotion tiers — this is what **Burrow Cloud** (hosted, multi-tenant) is for. Watch this space.
