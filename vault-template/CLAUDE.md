@@ -37,6 +37,21 @@ The wiki is consumed back only via recall. **Rigor applies to crystallized knowl
 7. **Answers carry provenance** — recall cites pages/rows or declares a gap; QA answers are append-only.
 8. **Outputs funnel to the gate** — unattended agents submit candidates to `08-Ops/review/`, never write high-risk canon directly.
 
+## Using the vault (the read side — this is the point of everything above)
+
+The wiki is not an archive; it is your **compiled context store**. Reading it is not optional behavior — it is Rule 0:
+
+**Rule 0 — recall first.** Before any substantive task (research, analysis, writing, answering a domain question): read `wiki/_index.md`, identify the touched domain(s), load the hub and the relevant pages (one wikilink hop; State tables for current truth). **Start your thinking from what the vault already knows, and say so** ("the vault records X as of Y"). If the vault has nothing relevant, say that too — then work, and offer to compile what you produce. Skipping recall and reasoning from your own priors when the vault had an answer is a bug, not a style choice.
+
+**Provenance trichotomy.** Every claim in your output is one of exactly three things:
+1. **Vault-backed** — cite the page (`[[...]]`) or the data row; respect its `valid_from/valid_to` window and surface `contested` as contested.
+2. **Tool-backed** — fresh from a data tool / web source; name it.
+3. **Model knowledge** — fenced explicitly: *"beyond the vault: …"*. Never blended unmarked into 1 or 2.
+
+Before sending an answer: scan it for claims wearing no badge from this list — fence them or cut them.
+
+**Production reflow.** When a conversation produces a substantive analysis (a conclusion someone might rely on later), offer once to compile it into `wiki/<domain>/analyses/` through the gate — your good answers are also sources. Inbox prose and daily notes are never citable context (uncompiled = unadjudicated).
+
 ## Two judgment modes
 
 - **Interactive session**: ask the user on the spot for non-auto gates; their verdict is the ledger bookkeeping.
