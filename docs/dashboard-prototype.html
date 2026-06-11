@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陋居 · THE BURROW — 自动化知识工作区</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F2EA; --paper-2:#EFEBE0; --ink:#1B1812; --ink-2:#5A5547; --ink-3:#8E887A;
+  --hair:#D9D2C2; --hair-2:#C9C1AD;
+  --red:#C8371F; --red-soft:#F3DCD6;
+  --green:#2F7D4E; --green-soft:#DEEAE0;
+  --amber:#B5851B; --amber-soft:#F1E6CC;
+  --slate:#7A8694; --slate-soft:#E2E6E9;
+  --mono:'IBM Plex Mono','Noto Sans Mono CJK SC',monospace;
+  --sans:'Familjen Grotesk','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  --disp:'Fraunces','Noto Serif SC','Songti SC',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:15px}
+body{
+  font-family:var(--sans); background:var(--paper); color:var(--ink);
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 119px, rgba(27,24,18,.025) 119px, rgba(27,24,18,.025) 120px),
+    radial-gradient(ellipse 90% 60% at 50% -10%, #FBF9F3 0%, var(--paper) 60%);
+  min-height:100vh;
+}
+::selection{background:var(--red);color:var(--paper)}
+
+/* ── reveal ── */
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.rv{animation:rise .55s cubic-bezier(.2,.7,.2,1) both}
+.rv1{animation-delay:.05s}.rv2{animation-delay:.14s}.rv3{animation-delay:.23s}
+.rv4{animation-delay:.32s}.rv5{animation-delay:.41s}.rv6{animation-delay:.5s}
+
+.wrap{max-width:1480px;margin:0 auto;padding:0 28px 60px}
+
+/* ── masthead ── */
+header{display:flex;align-items:flex-end;justify-content:space-between;
+  padding:26px 0 16px;border-bottom:2px solid var(--ink)}
+.brand{display:flex;align-items:baseline;gap:14px}
+.brand h1{font-family:var(--disp);font-weight:900;font-size:2.1rem;letter-spacing:.01em}
+.brand .latin{font-family:var(--disp);font-style:italic;font-weight:400;font-size:1.05rem;color:var(--ink-2)}
+.brand .badge{font-family:var(--mono);font-size:.68rem;border:1px solid var(--ink);padding:3px 8px;
+  border-radius:99px;letter-spacing:.08em;transform:translateY(-4px)}
+.head-right{text-align:right}
+.head-right .date{font-family:var(--mono);font-size:.78rem;color:var(--ink-2);letter-spacing:.05em}
+.head-right .morning{font-size:.95rem;margin-top:4px}
+.head-right .morning b{border-bottom:2px solid var(--red)}
+
+/* ── north star strip ── */
+.nstrip{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--hair-2);margin-bottom:26px}
+.ncell{padding:16px 18px 14px;border-left:1px solid var(--hair-2);cursor:pointer;transition:background .2s}
+.ncell:first-child{border-left:none;padding-left:2px}
+.ncell:hover{background:rgba(255,255,255,.55)}
+.ncell .lbl{font-size:.7rem;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase;font-weight:600}
+.ncell .val{font-family:var(--mono);font-size:1.9rem;font-weight:600;line-height:1.15;margin-top:5px;font-variant-numeric:tabular-nums}
+.ncell .val small{font-size:.85rem;color:var(--ink-3);font-weight:400}
+.ncell .sub{font-size:.74rem;margin-top:2px;color:var(--ink-2)}
+.delta-up{color:var(--green);font-family:var(--mono);font-size:.85rem}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;transform:translateY(-1px)}
+.dot.g{background:var(--green)}.dot.a{background:var(--amber)}.dot.r{background:var(--red)}
+.dot.s{background:var(--slate)}.dot.p{background:var(--hair-2);border:1px solid var(--ink-3)}
+.pulse{animation:pp 2s ease-in-out infinite}
+@keyframes pp{0%,100%{box-shadow:0 0 0 0 rgba(200,55,31,.45)}50%{box-shadow:0 0 0 6px rgba(200,55,31,0)}}
+
+/* ── main grid ── */
+.grid{display:grid;grid-template-columns:430px 1fr 400px;gap:26px;align-items:start}
+@media(max-width:1280px){.grid{grid-template-columns:1fr 1fr}.col3{grid-column:1/-1}}
+@media(max-width:880px){.grid{grid-template-columns:1fr}}
+section{background:rgba(255,255,255,.5);border:1px solid var(--hair);border-radius:3px}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;
+  padding:13px 16px 11px;border-bottom:1px solid var(--hair)}
+.sec-h h2{font-size:.93rem;font-weight:700;letter-spacing:.02em}
+.sec-h h2 .no{font-family:var(--mono);color:var(--red);font-size:.78rem;margin-right:8px}
+.sec-h .meta{font-family:var(--mono);font-size:.68rem;color:var(--ink-3);letter-spacing:.05em}
+.col{display:flex;flex-direction:column;gap:26px}
+
+/* ── clock ── */
+.clockbox{padding:18px 14px 8px;text-align:center}
+.clock-svg{width:100%;max-width:330px}
+.sector-label{font-family:var(--sans);font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+.hand{transition:transform 1.1s cubic-bezier(.3,1.3,.35,1)}
+.hand line{stroke-linecap:round}
+.hand .tip{font-family:var(--mono);font-size:10px;font-weight:600;fill:#fff}
+.clock-legend{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;padding:8px 10px 14px;font-size:.74rem;color:var(--ink-2)}
+.clock-legend span b{font-family:var(--mono);font-weight:600;color:var(--ink)}
+
+/* ── appliance table ── */
+table{width:100%;border-collapse:collapse}
+.appl td{padding:10px 10px;border-top:1px solid var(--hair);font-size:.82rem;vertical-align:middle}
+.appl tr:first-child td{border-top:none}
+.appl tr{transition:background .2s}
+.appl tr:hover{background:rgba(255,255,255,.7)}
+.appl tr.anomaly{background:linear-gradient(90deg,var(--red-soft),transparent 70%)}
+.a-name{font-weight:700;white-space:nowrap}
+.a-name small{display:block;font-weight:400;color:var(--ink-3);font-size:.68rem;font-family:var(--mono);margin-top:1px}
+.a-state{font-size:.74rem;white-space:nowrap}
+.a-out{color:var(--ink-2);font-size:.74rem;line-height:1.45;max-width:150px}
+.budget{width:64px}
+.budget .bar{height:4px;background:var(--paper-2);border:1px solid var(--hair-2);border-radius:2px;overflow:hidden}
+.budget .bar i{display:block;height:100%;background:var(--ink-2)}
+.budget em{font-family:var(--mono);font-style:normal;font-size:.62rem;color:var(--ink-3)}
+.toggle{width:34px;height:19px;border-radius:99px;border:1px solid var(--ink-2);background:var(--green-soft);
+  position:relative;cursor:pointer;transition:background .25s;flex:none}
+.toggle::after{content:'';position:absolute;top:2px;left:17px;width:13px;height:13px;border-radius:50%;
+  background:var(--ink);transition:left .25s}
+.toggle.off{background:var(--paper-2)}
+.toggle.off::after{left:2px;background:var(--ink-3)}
+
+/* ── flywheel ── */
+.fly{padding:6px 0}
+.step{display:grid;grid-template-columns:64px 22px 1fr auto;gap:0 10px;padding:9px 16px;
+  align-items:baseline;border-top:1px dashed var(--hair)}
+.step:first-child{border-top:none}
+.step .t{font-family:var(--mono);font-size:.72rem;color:var(--ink-3)}
+.step .mark{font-family:var(--mono);font-size:.8rem;text-align:center}
+.step .what{font-size:.84rem}
+.step .what small{color:var(--ink-3);font-size:.73rem;margin-left:6px}
+.step .n{font-family:var(--mono);font-size:.74rem;color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.step.fail{background:var(--red-soft);cursor:pointer}
+.step.fail .what{font-weight:700}
+.err{display:none;margin:0 16px 10px 96px;padding:10px 12px;border:1px solid var(--red);
+  border-left:3px solid var(--red);font-family:var(--mono);font-size:.7rem;line-height:1.6;
+  color:var(--ink-2);background:#fff}
+.err.open{display:block}
+.err button{margin-top:8px;font-family:var(--sans);font-size:.74rem;font-weight:700;border:1px solid var(--ink);
+  background:var(--ink);color:var(--paper);padding:5px 12px;border-radius:2px;cursor:pointer}
+.err button:hover{background:var(--red);border-color:var(--red)}
+
+/* ── QA timeline ── */
+.qa{padding:4px 0}
+.qa-item{display:grid;grid-template-columns:78px 14px 1fr;gap:0 12px;padding:11px 16px;border-top:1px solid var(--hair);cursor:pointer;transition:background .2s}
+.qa-item:hover{background:rgba(255,255,255,.7)}
+.qa-item:first-child{border-top:none}
+.qa-item .d{font-family:var(--mono);font-size:.72rem;color:var(--ink-3);padding-top:2px}
+.qa-item .rail{position:relative}
+.qa-item .rail::before{content:'';position:absolute;left:5px;top:7px;width:5px;height:5px;border-radius:50%;background:var(--ink)}
+.qa-item .rail::after{content:'';position:absolute;left:7px;top:16px;bottom:-14px;width:1px;background:var(--hair-2)}
+.qa-item:last-child .rail::after{display:none}
+.qa-item h4{font-size:.84rem;font-weight:600;line-height:1.5}
+.qa-item .verdict{font-family:var(--mono);font-size:.68rem;margin-top:3px}
+.v-hit{color:var(--green)}.v-miss{color:var(--red)}
+.qa-item .q{color:var(--ink-3);font-size:.7rem;margin-top:2px}
+
+/* ── review queue ── */
+.queue{padding:10px 12px;display:flex;flex-direction:column;gap:10px}
+.card{border:1px solid var(--hair-2);background:#FDFCF8;border-radius:3px;padding:12px 13px;
+  transition:transform .4s cubic-bezier(.5,0,.7,.4),opacity .4s,margin .35s .15s,max-height .35s .15s,padding .35s .15s;
+  max-height:300px;overflow:hidden}
+.card.out{transform:translateX(60px);opacity:0;max-height:0;padding-top:0;padding-bottom:0;margin-top:-10px;border-width:0}
+.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.chip{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;padding:2px 7px;border-radius:2px;font-weight:600}
+.chip.new{background:var(--amber-soft);color:#7A5A0E;border:1px solid #D9BE83}
+.chip.retire{background:var(--red-soft);color:var(--red);border:1px solid #DBA396}
+.chip.disp{background:var(--slate-soft);color:#44505E;border:1px solid #B9C2CB}
+.chip.edge{background:var(--green-soft);color:var(--green);border:1px solid #A8C9B2}
+.gatehint{font-family:var(--mono);font-size:.64rem;color:var(--ink-3)}
+.card h3{font-size:.88rem;font-weight:700;margin-bottom:5px}
+.diff{font-family:var(--mono);font-size:.72rem;line-height:1.7;background:var(--paper-2);
+  border:1px solid var(--hair);padding:7px 10px;border-radius:2px;margin-bottom:7px}
+.diff .old{color:var(--ink-3);text-decoration:line-through}
+.diff .new{color:var(--green);font-weight:600}
+.diff .ev{color:var(--red)}
+.src{font-size:.68rem;color:var(--ink-3);margin-bottom:9px}
+.src u{text-decoration-color:var(--hair-2);text-underline-offset:2px;cursor:pointer}
+.acts{display:flex;gap:7px}
+.acts button{font-family:var(--sans);font-size:.76rem;font-weight:700;padding:6px 13px;border-radius:2px;
+  cursor:pointer;border:1px solid var(--ink);background:transparent;transition:all .15s}
+.acts .ok{background:var(--ink);color:var(--paper)}
+.acts .ok:hover{background:var(--green);border-color:var(--green)}
+.acts .no:hover{background:var(--red);border-color:var(--red);color:#fff}
+.acts .meh{border-color:var(--hair-2);color:var(--ink-2)}
+.acts .meh:hover{border-color:var(--ink)}
+.qempty{text-align:center;padding:26px 10px;color:var(--ink-3);font-size:.85rem;display:none}
+.qempty .big{font-family:var(--disp);font-style:italic;font-size:1.3rem;color:var(--ink-2);margin-bottom:4px}
+
+/* ── shadow gate ── */
+.gates{padding:6px 16px 14px}
+.gate{padding:10px 0;border-top:1px dashed var(--hair)}
+.gate:first-child{border-top:none}
+.gate-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.gate-top .gn{font-size:.8rem;font-weight:600}
+.gate-top .gs{font-family:var(--mono);font-size:.7rem;font-variant-numeric:tabular-nums}
+.gs.auto{color:var(--green);font-weight:600}.gs.lock{color:var(--ink-3)}
+.gbar{height:7px;background:var(--paper-2);border:1px solid var(--hair-2);border-radius:99px;overflow:hidden;position:relative}
+.gbar i{display:block;height:100%;background:repeating-linear-gradient(135deg,var(--ink-2) 0 4px,var(--ink-3) 4px 8px);
+  transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.gbar.full i{background:var(--green)}
+.gbar.locked i{background:repeating-linear-gradient(135deg,var(--hair-2) 0 4px,transparent 4px 8px);width:100%}
+.gate .note{font-size:.66rem;color:var(--ink-3);margin-top:4px;font-family:var(--mono)}
+@keyframes flashR{0%{background:var(--red)}100%{background:transparent}}
+.gflash .gbar{animation:flashR 1s ease-out}
+
+/* ── toast ── */
+#toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--ink);color:var(--paper);font-size:.82rem;padding:10px 20px;border-radius:3px;
+  transition:transform .35s cubic-bezier(.2,.9,.3,1.2);z-index:99;font-family:var(--mono);letter-spacing:.02em;
+  box-shadow:0 8px 24px rgba(27,24,18,.25)}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#toast b{color:#9FD8B2}
+#toast.warn b{color:#F0A99A}
+
+footer{margin-top:34px;padding-top:14px;border-top:2px solid var(--ink);
+  display:flex;justify-content:space-between;font-family:var(--mono);font-size:.66rem;color:var(--ink-3);letter-spacing:.06em}
+footer .inv{display:flex;gap:14px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="rv rv1">
+  <div class="brand">
+    <h1>陋居</h1>
+    <span class="latin">The Burrow</span>
+    <span class="badge">OBSIDIAN&nbsp;WORKSPACE</span>
+  </div>
+  <div class="head-right">
+    <div class="date">2026-06-12 THU · 08:04 · macro / equity / tech</div>
+    <div class="morning">昨夜 <b>5</b> 件器物运转完毕，<b id="m-exc">4</b> 项例外等你裁决，<b>1</b> 件器物异常</div>
+  </div>
+</header>
+
+<div class="nstrip rv rv2">
+  <div class="ncell" title="本体构成 · 点击下钻图谱">
+    <div class="lbl">本体节点</div>
+    <div class="val">412 <span class="delta-up">+9</span></div>
+    <div class="sub">边 583 <span class="delta-up">+14</span> · T0 事实 1,207</div>
+  </div>
+  <div class="ncell" title="健康度四缺陷 · 点击下钻 lint 报告">
+    <div class="lbl">健康缺陷</div>
+    <div class="val" style="color:var(--amber)">1</div>
+    <div class="sub"><span class="dot a"></span>断链 ×1 · 孤儿 0 · 越界 0 · contested 0</div>
+  </div>
+  <div class="ncell" title="INBOX 待消化">
+    <div class="lbl">待消化</div>
+    <div class="val">3 <small>篇</small></div>
+    <div class="sub"><span class="dot a"></span>最老 2 天（≥3 天红灯）</div>
+  </div>
+  <div class="ncell" title="审核队列">
+    <div class="lbl">待裁决</div>
+    <div class="val" id="n-review" style="color:var(--red)">4</div>
+    <div class="sub"><span class="dot r pulse"></span>例外优先 · 裁决即训练</div>
+  </div>
+  <div class="ncell" title="昨夜预算消耗">
+    <div class="lbl">昨夜预算</div>
+    <div class="val">7<small>/10</small></div>
+    <div class="sub">缺口配额 · research 并发 1/1</div>
+  </div>
+</div>
+
+<div class="grid">
+
+  <!-- ════ COL 1 ════ -->
+  <div class="col col1">
+    <section class="rv rv3">
+      <div class="sec-h">
+        <h2><span class="no">01</span>韦斯莱时钟</h2>
+        <span class="meta">APPLIANCE CLOCK · 实时</span>
+      </div>
+      <div class="clockbox">
+        <svg class="clock-svg" viewBox="0 0 340 340" id="clock">
+          <defs>
+            <filter id="paperblur"><feGaussianBlur stdDeviation="0.4"/></filter>
+          </defs>
+          <!-- sectors: 工作中 top(0°), 排队 72°, 待命 144°, 暂停 216°, 异常 288° -->
+          <g id="sectors"></g>
+          <circle cx="170" cy="170" r="128" fill="none" stroke="#1B1812" stroke-width="1.5"/>
+          <circle cx="170" cy="170" r="98" fill="none" stroke="#C9C1AD" stroke-width="1" stroke-dasharray="2 4"/>
+          <g id="seclabels"></g>
+          <g id="hands"></g>
+          <circle cx="170" cy="170" r="7" fill="#1B1812"/>
+          <circle cx="170" cy="170" r="2.5" fill="#F5F2EA"/>
+        </svg>
+        <div class="clock-legend" id="legend"></div>
+      </div>
+    </section>
+
+    <section class="rv rv4">
+      <div class="sec-h">
+        <h2><span class="no">02</span>器物清单</h2>
+        <span class="meta">6 ROUTINES · 契约约束</span>
+      </div>
+      <table class="appl"><tbody id="appl-body"></tbody></table>
+    </section>
+  </div>
+
+  <!-- ════ COL 2 ════ -->
+  <div class="col col2">
+    <section class="rv rv4">
+      <div class="sec-h">
+        <h2><span class="no">03</span>昨夜飞轮轨迹</h2>
+        <span class="meta">RUN #1847 · 04:00 CRON · checkpoint ×6</span>
+      </div>
+      <div class="fly">
+        <div class="step"><span class="t">04:00:12</span><span class="mark" style="color:var(--green)">✓</span>
+          <span class="what">daily-routine 唤醒<small>扫描到期 QA ×3</small></span><span class="n">0.8s</span></div>
+        <div class="step"><span class="t">04:02:41</span><span class="mark" style="color:var(--green)">✓</span>
+          <span class="what">答题员 · recall→复盘→推演<small>3 题答案 append</small></span><span class="n">2m41s</span></div>
+        <div class="step"><span class="t">04:05:22</span><span class="mark" style="color:var(--green)">✓</span>
+          <span class="what">结构巡检 · lint<small>Gap Report：缺口 ×4（数据缺失 2 / 单一来源 1 / 过期 1）</small></span><span class="n">18s</span></div>
+        <div class="step"><span class="t">04:06:03</span><span class="mark" style="color:var(--green)">✓</span>
+          <span class="what">研究员舰队 · 派研 3/4<small>预算余 7/10 · 1 缺口排队至今晚</small></span><span class="n">24m</span></div>
+        <div class="step"><span class="t">04:31:55</span><span class="mark" style="color:var(--green)">✓</span>
+          <span class="what">编译闸门 · ingest ×2 bundle<small>六档裁决 · 词表校验通过</small></span><span class="n">1m12s</span></div>
+        <div class="step"><span class="t">04:33:18</span><span class="mark" style="color:var(--green)">✓</span>
+          <span class="what">候选分流<small>自动晋升 11（影子闸记账）· 待人工 4</small></span><span class="n">3.1s</span></div>
+        <div class="step fail" id="failstep" onclick="toggleErr()"><span class="t">04:40:07</span><span class="mark" style="color:var(--red)">✗</span>
+          <span class="what">语义巡检 · 抽样复核<small>连续失败 ×2 → 已暂停并升级（escalation）· 点击展开</small></span><span class="n">—</span></div>
+        <div class="err" id="errbox">
+ERROR semantic_lint: sample_window(domain=tech, n=40)
+  → LLM adjudication timeout after 120s (retry 2/2)
+  → checkpoint saved at node 'contradiction_scan' (17/40 done)
+  <button onclick="retryStep(event)">↻ 从 checkpoint 重试本步</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="rv rv5">
+      <div class="sec-h">
+        <h2><span class="no">04</span>QA 时间线</h2>
+        <span class="meta">APPEND-ONLY · 不变量 7</span>
+      </div>
+      <div class="qa">
+        <div class="qa-item">
+          <span class="d">06-12<br>昨夜</span><span class="rail"></span>
+          <div><h4>7 天逆回购维持 1.40%，资金面延续宽松；隔夜利率中枢小幅下行</h4>
+          <div class="verdict v-hit">✓ 上期推演兑现 · 基准情形</div>
+          <div class="q">Q：货币政策操作基调（weekly · macro）</div></div>
+        </div>
+        <div class="qa-item">
+          <span class="d">06-12<br>昨夜</span><span class="rail"></span>
+          <div><h4>半导体设备资本开支上修信号增强，出口管制传导滞后于预期</h4>
+          <div class="verdict v-hit">✓ 上期推演部分兑现 · 触发条件 2/3</div>
+          <div class="q">Q：AI 算力供应链景气跟踪（weekly · tech）</div></div>
+        </div>
+        <div class="qa-item">
+          <span class="d">06-08</span><span class="rail"></span>
+          <div><h4>PPI 同比降幅收窄至 −2.1%，上游利润传导仍弱</h4>
+          <div class="verdict v-miss">✗ 上期推演偏离 · 已记入复盘</div>
+          <div class="q">Q：上下游利润分配（monthly · macro）</div></div>
+        </div>
+        <div class="qa-item">
+          <span class="d">06-05</span><span class="rail"></span>
+          <div><h4>两融余额回升至 1.9 万亿上方，风险偏好修复确认</h4>
+          <div class="verdict v-hit">✓ 上期推演兑现 · 上行情形</div>
+          <div class="q">Q：A 股微观流动性（weekly · equity）</div></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ════ COL 3 ════ -->
+  <div class="col col3">
+    <section class="rv rv5">
+      <div class="sec-h">
+        <h2><span class="no">05</span>审核队列 · 例外裁决</h2>
+        <span class="meta" id="q-meta">4 PENDING · 裁决即训练</span>
+      </div>
+      <div class="queue" id="queue">
+
+        <div class="card" data-gate="newnode">
+          <div class="card-top"><span class="chip new">新建节点</span>
+            <span class="gatehint">影子闸 · 新建节点 <b id="gh-newnode">12</b>/20</span></div>
+          <h3>MLF 利率 <span style="font-weight:400;color:var(--ink-3)">(Indicator · macro)</span></h3>
+          <div class="diff"><span class="new">+ 中期借贷便利利率 · 1Y · 当前 2.00%</span><br>edges: operated_by → 中国人民银行 · transmits_to → LPR</div>
+          <div class="src">来源：<u>research bundle #r-422</u> · confidence: high · fact-check ✓ verified</div>
+          <div class="acts">
+            <button class="ok" onclick="judge(this,'approve','newnode')">批准</button>
+            <button class="no" onclick="judge(this,'reject','newnode')">驳回</button>
+            <button class="meh" onclick="judge(this,'contested','newnode')">contested 并记</button>
+          </div>
+        </div>
+
+        <div class="card" data-gate="retire">
+          <div class="card-top"><span class="chip retire">退役触发 T1</span>
+            <span class="gatehint">影子闸 · 永久人工 🔒</span></div>
+          <h3>存款准备金率（大型机构）</h3>
+          <div class="diff"><span class="old">8.00% · valid 2026-02-05 →</span><br>
+            <span class="new">7.50% · valid_from 2026-06-15</span><br>
+            <span class="ev">caused_by_event → 2026-06-09 央行降准公告</span></div>
+          <div class="src">退役六步待执行：封旧行 + 事件盖章 + 插新行（原子）</div>
+          <div class="acts">
+            <button class="ok" onclick="judge(this,'approve','retire')">批准退役</button>
+            <button class="no" onclick="judge(this,'reject','retire')">驳回</button>
+          </div>
+        </div>
+
+        <div class="card" data-gate="disputed">
+          <div class="card-top"><span class="chip disp">DISPUTED T0</span>
+            <span class="gatehint">fact-check 分歧</span></div>
+          <h3>5 月新增社融</h3>
+          <div class="diff">源材料：<span class="old">2.29 万亿</span> vs findata MCP：<span class="new">2.3187 万亿</span><br>差异 1.25% · 超容差(0.5%)</div>
+          <div class="src">来源：<u>inbox #i-091（券商晨报）</u> vs <u>findata: shibor_sf_202605</u></div>
+          <div class="acts">
+            <button class="ok" onclick="judge(this,'approve','disputed')">用工具值</button>
+            <button class="no" onclick="judge(this,'reject','disputed')">用源值</button>
+            <button class="meh" onclick="judge(this,'contested','disputed')">contested 并记</button>
+          </div>
+        </div>
+
+        <div class="card" data-gate="xedge">
+          <div class="card-top"><span class="chip edge">跨域边</span>
+            <span class="gatehint">影子闸 · 跨域边 <b id="gh-xedge">5</b>/20</span></div>
+          <h3>出口管制收紧 <span style="color:var(--ink-3)">—drives→</span> 设备资本开支前置</h3>
+          <div class="diff">tech:Event → equity:Mechanism · 词表 drives（target 不限域）✓<br>durability: medium（因果传导）</div>
+          <div class="src">来源：<u>research bundle #r-419</u> · 双向引用 ×3</div>
+          <div class="acts">
+            <button class="ok" onclick="judge(this,'approve','xedge')">批准</button>
+            <button class="no" onclick="judge(this,'reject','xedge')">驳回</button>
+          </div>
+        </div>
+
+        <div class="qempty" id="qempty">
+          <div class="big">All quiet at the Burrow.</div>
+          队列清空 · 影子闸已记账 · 下次 tick 04:00
+        </div>
+      </div>
+    </section>
+
+    <section class="rv rv6">
+      <div class="sec-h">
+        <h2><span class="no">06</span>信任影子闸</h2>
+        <span class="meta">自治权是挣来的</span>
+      </div>
+      <div class="gates">
+        <div class="gate" id="g-merge">
+          <div class="gate-top"><span class="gn">T0 verified 合并补充</span><span class="gs auto">已自治 ✓</span></div>
+          <div class="gbar full"><i style="width:100%"></i></div>
+          <div class="note">20/20 连续批准 · 昨夜自动晋升 11 条 · 驳回即降级</div>
+        </div>
+        <div class="gate" id="g-newnode">
+          <div class="gate-top"><span class="gn">新建节点</span><span class="gs" id="gs-newnode">12/20</span></div>
+          <div class="gbar" id="gb-newnode"><i style="width:60%"></i></div>
+          <div class="note">连续零驳回中 · 再 8 次批准进入自动晋升白名单</div>
+        </div>
+        <div class="gate" id="g-xedge">
+          <div class="gate-top"><span class="gn">跨域边（drives 族）</span><span class="gs" id="gs-xedge">5/20</span></div>
+          <div class="gbar" id="gb-xedge"><i style="width:25%"></i></div>
+          <div class="note">观察期 · 上次驳回 2026-05-30（清零重计）</div>
+        </div>
+        <div class="gate" id="g-retire">
+          <div class="gate-top"><span class="gn">退役触发（T1/T2 当前态改变）</span><span class="gs lock">永久人工 🔒</span></div>
+          <div class="gbar locked"><i></i></div>
+          <div class="note">设计决定：改变世界当前态的写入不开放自治</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<footer class="rv rv6">
+  <div class="inv">
+    <span>INV-1 编译单向</span><span>INV-4 退役不删除</span><span>INV-7 QA APPEND-ONLY</span><span>INV-8 严谨只在闸门</span>
+  </div>
+  <span>ABLEWORK · WIKI RUNS #1847 · SPEC: docs/spec/wiki (draft)</span>
+</footer>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ───────── Weasley Clock ───────── */
+const STATES = [
+  {key:'working', name:'工作中', angle:0,   color:'#2F7D4E'},
+  {key:'queue',   name:'排队',   angle:72,  color:'#B5851B'},
+  {key:'idle',    name:'待命',   angle:144, color:'#7A8694'},
+  {key:'paused',  name:'暂停',   angle:216, color:'#8E887A'},
+  {key:'anomaly', name:'异常',   angle:288, color:'#C8371F'},
+];
+const APPLIANCES = [
+  {id:1, name:'编译裁决员', en:'ingest',      state:'working', len:118, out:'晨间 bundle ×2 已编译', budget:.7,  contract:'event:bundle → writes:candidates'},
+  {id:2, name:'分诊员',     en:'digest-inbox', state:'working', len:96,  out:'inbox 3 篇分诊中',     budget:.85, contract:'event:upload → writes:triage'},
+  {id:3, name:'研究员舰队', en:'deep-dive',    state:'queue',   len:108, out:'1 缺口排队（预算 7/10）',budget:.3, contract:'cron+gap → 并发1 · 置信≤med'},
+  {id:4, name:'答题员',     en:'qa-routine',   state:'idle',    len:88,  out:'昨夜 3 题 · 下次 04:00', budget:1,  contract:'cron 04:00 → INSERT qa_answers'},
+  {id:5, name:'结构巡检员', en:'lint-struct',  state:'idle',    len:112, out:'四缺陷 1 · 18s 完成',   budget:1,  contract:'cron 04:05 → 确定性 · 非LLM'},
+  {id:6, name:'语义巡检员', en:'lint-sem',     state:'anomaly', len:100, out:'连续失败 ×2 已暂停',    budget:.5, contract:'cron → 抽样≤40 · LLM'},
+];
+const C=170, polar=(a,r)=>[C+r*Math.sin(a*Math.PI/180), C-r*Math.cos(a*Math.PI/180)];
+
+function sectorPath(a0,a1,r){const [x0,y0]=polar(a0,r),[x1,y1]=polar(a1,r);
+  return `M${C},${C} L${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 0 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z`}
+
+const secG=document.getElementById('sectors'), labG=document.getElementById('seclabels');
+STATES.forEach(s=>{
+  const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+  p.setAttribute('d',sectorPath(s.angle-36,s.angle+36,128));
+  p.setAttribute('fill',s.color); p.setAttribute('opacity',s.key==='anomaly'?'0.13':'0.07');
+  p.id='sec-'+s.key; secG.appendChild(p);
+  const [lx,ly]=polar(s.angle,146);
+  const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x',lx);t.setAttribute('y',ly+4);t.setAttribute('text-anchor','middle');
+  t.setAttribute('class','sector-label'); t.textContent=s.name; labG.appendChild(t);
+  // ticks
+  [s.angle-36,s.angle+36].forEach(a=>{
+    const [x0,y0]=polar(a,120),[x1,y1]=polar(a,128);
+    const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',x0);l.setAttribute('y1',y0);l.setAttribute('x2',x1);l.setAttribute('y2',y1);
+    l.setAttribute('stroke','#C9C1AD');l.setAttribute('stroke-width','1'); secG.appendChild(l);
+  });
+});
+
+const handsG=document.getElementById('hands');
+const jitter=[-14,10,-6,16,-18,6]; // avoid overlap within sector
+APPLIANCES.forEach((a,i)=>{
+  const st=STATES.find(s=>s.key===a.state);
+  const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('class','hand'); g.id='hand-'+a.id;
+  g.style.transformOrigin='170px 170px';
+  g.style.transform=`rotate(${st.angle+jitter[i]}deg)`;
+  g.innerHTML=`
+    <line x1="170" y1="178" x2="170" y2="${170-a.len}" stroke="#1B1812" stroke-width="2"/>
+    <circle cx="170" cy="${170-a.len}" r="8.5" fill="${st.color}" stroke="#F5F2EA" stroke-width="1.5"/>
+    <text class="tip" x="170" y="${170-a.len+3.4}" text-anchor="middle">${a.id}</text>`;
+  handsG.appendChild(g);
+});
+function moveHand(id,stateKey){
+  const a=APPLIANCES.find(x=>x.id===id); a.state=stateKey;
+  const st=STATES.find(s=>s.key===stateKey);
+  const g=document.getElementById('hand-'+id);
+  g.style.transform=`rotate(${st.angle+jitter[id-1]}deg)`;
+  g.querySelector('circle').setAttribute('fill',st.color);
+  renderLegend();
+}
+function renderLegend(){
+  document.getElementById('legend').innerHTML=APPLIANCES.map(a=>{
+    const st=STATES.find(s=>s.key===a.state);
+    return `<span><b>${a.id}</b> ${a.name} <span class="dot" style="background:${st.color};width:7px;height:7px"></span></span>`;
+  }).join('');
+}
+renderLegend();
+
+/* working hands gentle wobble */
+setInterval(()=>{
+  APPLIANCES.filter(a=>a.state==='working').forEach(a=>{
+    const st=STATES.find(s=>s.key===a.state);
+    const g=document.getElementById('hand-'+a.id);
+    const w=(Math.random()*8-4);
+    g.style.transform=`rotate(${st.angle+jitter[a.id-1]+w}deg)`;
+  });
+},2600);
+
+/* ───────── appliance table ───────── */
+const SLABEL={working:['g','工作中'],queue:['a','排队'],idle:['s','待命'],paused:['p','暂停'],anomaly:['r','异常']};
+function renderTable(){
+  document.getElementById('appl-body').innerHTML=APPLIANCES.map(a=>{
+    const [cls,txt]=SLABEL[a.state];
+    return `<tr class="${a.state==='anomaly'?'anomaly':''}">
+      <td class="a-name">${a.name}<small>${a.en}</small></td>
+      <td class="a-state"><span class="dot ${cls}"></span>${txt}</td>
+      <td class="a-out">${a.out}<br><span style="font-family:var(--mono);font-size:.62rem;color:var(--ink-3)">${a.contract}</span></td>
+      <td class="budget"><div class="bar"><i style="width:${a.budget*100}%"></i></div><em>预算 ${Math.round(a.budget*100)}%</em></td>
+      <td><div class="toggle ${a.state==='paused'||a.state==='anomaly'?'off':''}" onclick="togglePause(${a.id},this)"></div></td>
+    </tr>`}).join('');
+}
+renderTable();
+function togglePause(id,el){
+  const a=APPLIANCES.find(x=>x.id===id);
+  if(a.state==='paused'||a.state==='anomaly'){
+    moveHand(id, a.en==='qa-routine'||a.en==='lint-struct'?'idle':'working');
+    toast(`<b>▶</b> ${a.name} 已恢复 · 下次 tick 生效`);
+  }else{
+    moveHand(id,'paused');
+    toast(`<b>⏸</b> ${a.name} 已暂停 · 飞轮日志将记 skipped`,true);
+  }
+  renderTable();
+}
+
+/* ───────── flywheel err ───────── */
+function toggleErr(){document.getElementById('errbox').classList.toggle('open')}
+function retryStep(e){
+  e.stopPropagation();
+  const step=document.getElementById('failstep');
+  step.classList.remove('fail');
+  step.querySelector('.mark').textContent='✓'; step.querySelector('.mark').style.color='var(--green)';
+  step.querySelector('.what').innerHTML='语义巡检 · 抽样复核<small>checkpoint 重入 · 23/40 续跑完成 · 0 矛盾</small>';
+  step.querySelector('.n').textContent='4m02s';
+  document.getElementById('errbox').classList.remove('open');
+  moveHand(6,'idle'); renderTable();
+  document.querySelector('.head-right .morning').innerHTML=
+    '昨夜 <b>5</b> 件器物运转完毕，<b id="m-exc">'+pending+'</b> 项例外等你裁决，<b style="border-color:var(--green)">0</b> 件器物异常';
+  toast('<b>✓</b> 语义巡检从 checkpoint 重入成功 · 异常旗清除');
+}
+
+/* ───────── review queue + shadow gate ───────── */
+let pending=4;
+const gates={newnode:{n:12,max:20},xedge:{n:5,max:20}};
+function judge(btn,verdict,gate){
+  const card=btn.closest('.card');
+  card.classList.add('out');
+  pending--;
+  document.getElementById('n-review').textContent=pending;
+  document.getElementById('q-meta').textContent=pending+' PENDING · 裁决即训练';
+  const mexc=document.getElementById('m-exc'); if(mexc) mexc.textContent=pending;
+  if(pending===0){
+    document.getElementById('n-review').style.color='var(--green)';
+    setTimeout(()=>document.getElementById('qempty').style.display='block',450);
+  }
+  if(gates[gate]){
+    const g=gates[gate];
+    if(verdict==='approve'){
+      g.n++;
+      animateGate(gate,g);
+      if(g.n>=g.max){
+        toast(`<b>✓</b> 批准 · 影子闸 ${g.n}/${g.max} — 该类型已挣得自治权`);
+        const bar=document.getElementById('gb-'+gate); bar.classList.add('full');
+        document.getElementById('gs-'+gate).textContent='已自治 ✓';
+        document.getElementById('gs-'+gate).className='gs auto';
+      }else{
+        toast(`<b>✓</b> 已批准 · 影子闸 ${gate==='newnode'?'新建节点':'跨域边'} ${g.n}/${g.max}`);
+      }
+    }else if(verdict==='reject'){
+      g.n=0; animateGate(gate,g);
+      const gel=document.getElementById('g-'+gate);
+      gel.classList.add('gflash'); setTimeout(()=>gel.classList.remove('gflash'),1000);
+      gel.querySelector('.note').textContent='驳回 → 清零重计 · 上次驳回 2026-06-12';
+      toast(`<b>✗</b> 已驳回 · 影子闸清零重计（信任是挣来的）`,true);
+    }else{
+      toast(`<b>◐</b> 已标记 contested · 双方并记,节点页将显示争议标注`);
+    }
+  }else{
+    if(verdict==='approve') toast('<b>✓</b> 退役六步原子执行：封旧行 → 事件盖章 → 插新行');
+    else if(verdict==='reject') toast('<b>✗</b> 已驳回 · 候选转 discard,审计留痕',true);
+    else toast('<b>◐</b> contested 并记 · T0 双值留存');
+  }
+  const hint=document.getElementById('gh-'+gate);
+  if(hint&&gates[gate]) hint.textContent=gates[gate].n;
+}
+function animateGate(gate,g){
+  const bar=document.querySelector('#gb-'+gate+' i');
+  if(bar) bar.style.width=(g.n/g.max*100)+'%';
+  const gs=document.getElementById('gs-'+gate);
+  if(gs&&g.n<g.max) gs.textContent=`${g.n}/${g.max}`;
+}
+
+/* ───────── toast ───────── */
+let toastTimer;
+function toast(html,warn){
+  const t=document.getElementById('toast');
+  t.innerHTML=html; t.className=warn?'warn show':'show';
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2800);
+}
+</script>
+</body>
+</html>
