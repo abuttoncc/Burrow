@@ -6,7 +6,8 @@
 
 [简体中文](README.zh-CN.md) · [Design Philosophy](docs/philosophy.md) · [Skills](#skills) · [Vault Template](#vault-template)
 
-<p align="center"><img src="docs/demo.svg" alt="Burrow demo: ingest through the gate, retirement queued, autonomy earned" width="760"></p>
+<p align="center"><img src="docs/dashboard-prototype.png" alt="The Burrow control panel: Weasley clock, appliance list, flywheel trace, review queue, trust gates" width="920"></p>
+<p align="center"><sub>The morning view — a Weasley clock of appliance states, the overnight flywheel trace, your review queue, and the trust ledger. <a href="docs/dashboard-prototype.html">Interactive prototype →</a></sub></p>
 
 ---
 
@@ -27,6 +28,10 @@ INBOX (anything goes) ──► burrow-ingest (THE gate) ──► wiki/ (typed,
                               
                     burrow-routine = one command that turns the whole wheel
 ```
+
+The gate in action:
+
+<p align="center"><img src="docs/demo.svg" alt="Burrow demo: ingest through the gate, retirement queued, autonomy earned" width="760"></p>
 
 ## Why another AI + Obsidian project?
 
@@ -145,11 +150,7 @@ The protocols are deliberately written as plain prose with examples: **the proto
 
 ## The control panel (prototype)
 
-The morning view we're building toward — a **Weasley clock** (each hand is an appliance, sectors are states: working / queued / idle / paused / anomaly), the flywheel trace, the review queue, and the trust ledger as a visible panel:
-
-<p align="center"><img src="docs/dashboard-prototype.png" alt="Burrow dashboard prototype: Weasley clock, appliance list, flywheel trace, review queue, trust gates" width="900"></p>
-
-Interactive HTML prototype: [docs/dashboard-prototype.html](docs/dashboard-prototype.html) — approve/reject cards and watch the ledger move; pause an appliance and watch its clock hand swing.
+The hero image above is the morning view we're building toward — a **Weasley clock** (each hand is an appliance; sectors are states: working / queued / idle / paused / anomaly), the flywheel trace, the review queue, and the trust ledger as a visible panel. Try the interactive HTML prototype: [docs/dashboard-prototype.html](docs/dashboard-prototype.html) — approve/reject cards and watch the ledger move; pause an appliance and watch its clock hand swing.
 
 ## Roadmap
 
