@@ -55,9 +55,12 @@ git clone https://github.com/abuttoncc/Burrow.git
 **2. Install the skills** (Claude Code shown; any agent-skills runner works)
 
 ```bash
-cp -r Burrow/skills/* your-vault/.claude/skills/
+cp -r Burrow/skills/burrow-* your-vault/.claude/skills/
+cp -r Burrow/skills/auto-wiki your-vault/.claude/skills/   # engine mode only
 cd your-vault && claude
 ```
+
+The template ships its `.claude/` pre-wired: `settings.json` (permission allowlist for unattended runs) and `automation/burrow-routine.sh` (the cron/launchd runner).
 
 **3. Let it walk you in**
 
@@ -83,7 +86,7 @@ Drop anything into `Inbox/` — an article, a meeting note, a half-thought. Then
 
 ```bash
 # unattended, via OS cron (Obsidian has no background runtime — nobody's does):
-0 4 * * * cd /path/to/vault && claude -p "/burrow-routine" >> 08-Ops/runs/cron.log 2>&1
+0 4 * * * /bin/bash /path/to/vault/.claude/automation/burrow-routine.sh
 ```
 
 **6. Watch the ledger earn trust**

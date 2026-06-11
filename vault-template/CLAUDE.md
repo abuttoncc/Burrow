@@ -24,6 +24,7 @@ The wiki is consumed back only via recall. **Rigor applies to crystallized knowl
 | `08-Ops/` | Routines (contracts) · runs · review queue · [[approval-ledger]] |
 | `wiki/` | The ontology. Step 0 of ingest/recall: read `wiki/_index.md`, route by keywords |
 | `_protocols/` | The discipline in prose — these files ARE the operating prompts |
+| `.claude/` | Skills (copied from the repo) · `settings.json` permissions · `automation/` headless runner |
 
 ## Invariants (violating any of these is a bug, not a style choice)
 

@@ -12,7 +12,8 @@ git clone https://github.com/abuttoncc/Burrow.git
 # Route B — graft onto an existing vault: copy these into your vault root:
 #   00-Dashboard/  Inbox/  wiki/  07-QA/  08-Ops/  _protocols/  CLAUDE.md  (+ .obsidian theme/snippet if you want the look)
 
-cp -r Burrow/skills/* your-vault/.claude/skills/
+cp -r Burrow/skills/burrow-* your-vault/.claude/skills/
+cp -r Burrow/skills/auto-wiki your-vault/.claude/skills/   # engine mode only
 cd your-vault && claude
 ```
 
@@ -56,10 +57,10 @@ Morning ritual, manual:
 Or unattended via OS cron:
 
 ```bash
-0 4 * * * cd /path/to/vault && claude -p "/burrow-routine" >> 08-Ops/runs/cron.log 2>&1
+0 4 * * * /bin/bash /path/to/vault/.claude/automation/burrow-routine.sh
 ```
 
-**⚠️ The permissions gotcha (read this before your first cron run).** Non-interactive `claude -p` cannot answer permission prompts — an unconfigured run will hang or bail. Configure the vault's `.claude/settings.json` first. Two options:
+**⚠️ The permissions gotcha.** Non-interactive `claude -p` cannot answer permission prompts — an unconfigured run hangs or bails. **The template ships `.claude/settings.json` with Option A below already in place**; review it, don't just trust it. The shipped runner `.claude/automation/burrow-routine.sh` handles PATH, logging to `08-Ops/runs/`, and has proxy notes in its header. Two postures:
 
 ```jsonc
 // Option A — precise allowlist (recommended): permit what the routine actually does

@@ -1,0 +1,11 @@
+# Obsidian runtime state (keep appearance.json, themes/, snippets/ — they ARE the template)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+# engine-mode runtime products
+wiki/*/data.db-wal
+wiki/*/data.db-shm
+# unattended run logs
+08-Ops/runs/cron-*.log
+# per-machine agent settings
+.claude/settings.local.json

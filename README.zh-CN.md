@@ -49,8 +49,10 @@ cd your-vault && claude
 无人值守（Obsidian 没有后台运行时——所有同类项目都一样）：
 
 ```bash
-0 4 * * * cd /path/to/vault && claude -p "/burrow-routine" >> 08-Ops/runs/cron.log 2>&1
+0 4 * * * /bin/bash /path/to/vault/.claude/automation/burrow-routine.sh
 ```
+
+模板自带 `.claude/`：`settings.json`（无人值守权限白名单）+ `automation/burrow-routine.sh`（cron/launchd 运行器）。
 
 ## 七条不变量（违反任何一条就不是 Burrow）
 
