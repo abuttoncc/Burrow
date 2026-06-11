@@ -6,6 +6,8 @@
 
 [English](README.md) · [设计哲学](docs/philosophy.md)
 
+<p align="center"><img src="docs/demo.svg" alt="Burrow demo：编译入闸、退役排队、自治权挣取" width="760"></p>
+
 ---
 
 ## 这是什么

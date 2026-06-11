@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 480" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13">
+  <style>
+    .l{opacity:0;animation:a .01s linear forwards}
+    @keyframes a{to{opacity:1}}
+    .c1{animation-delay:.4s}.c2{animation-delay:1.3s}.c3{animation-delay:2.0s}.c4{animation-delay:2.6s}
+    .c5{animation-delay:3.2s}.c6{animation-delay:3.8s}.c7{animation-delay:4.6s}.c8{animation-delay:5.2s}
+    .c9{animation-delay:6.4s}.c10{animation-delay:7.3s}.c11{animation-delay:8.0s}.c12{animation-delay:8.9s}
+    .c13{animation-delay:9.7s}.c14{animation-delay:10.6s}
+    .cur{animation:blink 1s steps(1) infinite}
+    @keyframes blink{50%{opacity:0}}
+    .ink{fill:#E8E3D5}.dim{fill:#8E887A}.grn{fill:#7FC79A}.red{fill:#F0876F}.amb{fill:#E2B765}.vio{fill:#B5A8E0}
+  </style>
+  <rect width="760" height="480" rx="10" fill="#1B1812"/>
+  <rect width="760" height="34" rx="10" fill="#26211A"/>
+  <circle cx="22" cy="17" r="5.5" fill="#F0876F"/><circle cx="42" cy="17" r="5.5" fill="#E2B765"/><circle cx="62" cy="17" r="5.5" fill="#7FC79A"/>
+  <text x="380" y="21" text-anchor="middle" class="dim" font-size="12">the-burrow — claude</text>
+
+  <text x="24" y="64" class="ink l c1">❯ <tspan class="vio">/burrow-ingest</tspan></text>
+  <text x="24" y="90" class="dim l c2">🏠 the gate · INBOX: 1 item · domain contract: macro ✓</text>
+  <text x="24" y="112" class="ink l c3">  route → macro · source registered <tspan class="dim">(hash 9f3a · official)</tspan></text>
+  <text x="24" y="134" class="ink l c4">  extract → 1 event · 1 state change · 1 observation</text>
+  <text x="24" y="156" class="ink l c5">  adjudicate → <tspan class="amb">T4</tspan> event ✓ · <tspan class="amb">T1</tspan> retirement zipper prepared · <tspan class="amb">T0</tspan> <tspan class="grn">verified</tspan></text>
+  <text x="24" y="178" class="ink l c6">  vocab check → operated_by ✓ transmits_to ✓</text>
+  <text x="24" y="204" class="ink l c7">  ledger → t0-merge <tspan class="grn">AUTO (20/20 earned)</tspan> → applied</text>
+  <text x="24" y="226" class="ink l c8">           retirement <tspan class="red">LOCKED</tspan> → queued for your judgment</text>
+  <text x="24" y="252" class="grn l c9">✓ 2 applied · 1 queued · runs.md +1</text>
+
+  <text x="24" y="292" class="ink l c10">❯ <tspan class="vio">/burrow-gate</tspan></text>
+  <text x="24" y="318" class="ink l c11">⚖ 1 card · <tspan class="red">RETIRE T1</tspan> reserve-ratio 8.00% → 7.50%</text>
+  <text x="24" y="340" class="dim l c11">  caused_by [[2026-06-09-rrr-cut]] · six steps staged, atomic</text>
+  <text x="24" y="366" class="ink l c12">  approve? <tspan class="grn">y</tspan> → old row closed · event stamped · new row opened ✓</text>
+  <text x="24" y="392" class="amb l c13">  ledger: new-node 12/20 · cross-domain-edge 5/20 · retirement stays locked</text>
+  <text x="24" y="428" class="ink l c14">🧶 All quiet at the Burrow.<tspan class="cur ink"> ▌</tspan></text>
+</svg>

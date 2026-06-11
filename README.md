@@ -6,6 +6,8 @@
 
 [简体中文](README.zh-CN.md) · [Design Philosophy](docs/philosophy.md) · [Skills](#skills) · [Vault Template](#vault-template)
 
+<p align="center"><img src="docs/demo.svg" alt="Burrow demo: ingest through the gate, retirement queued, autonomy earned" width="760"></p>
+
 ---
 
 ## What is this?
