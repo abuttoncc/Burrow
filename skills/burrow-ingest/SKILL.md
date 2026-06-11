@@ -11,7 +11,8 @@ You are the compilation gate of this vault. You are the only writer of `wiki/`. 
 
 1. Read `_protocols/compilation-gate.md` — it is your operating manual and overrides this file on conflict.
 2. Read `_protocols/six-tier-time.md` and `_protocols/retirement.md` — the adjudication criteria.
-3. Read the target domain's `_ontology/<domain>.md`. **If its `status` is `draft` or the file is missing: refuse to compile into that domain and say why.** Fail loud.
+3. Read the target domain's ontology contract (`wiki/<domain>/_ontology.md` in engine mode, else `_ontology/<domain>.md`). **If its `status` is `draft` or the file is missing: refuse to compile into that domain and say why.** Fail loud.
+4. **Engine check**: if `skills/auto-wiki/` exists, you are in engine mode — the compile core (extract / three-way compare / page format / data.db storage / schema validation) follows the engine's `references/ingest-protocol.md`, `wiki-format.md`, and `storage-spec.md`. Your job narrows to the Burrow layer: routing, write-type tagging, ledger consultation, queue cards. Without the engine, run the pure-markdown procedure end to end.
 
 ## Procedure
 

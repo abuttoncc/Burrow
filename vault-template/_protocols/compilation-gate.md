@@ -52,6 +52,17 @@ For each item, look up its write-type in `_burrow/gate-ledger.yaml`:
 
 Validation failure at any step fails the **whole batch** to the queue — no half-compiled entries, ever.
 
+## Engine mode (auto-wiki inside)
+
+If `skills/auto-wiki/` is installed (the [auto-wiki](https://github.com/hanlinlibham/auto-wiki) compilation engine, v0.2+), steps 2–6 **delegate to the engine's protocols** — they are the full-strength implementation of the same discipline:
+
+- Extraction, three-way compare (reinforce / update / conflict), and page writes follow `skills/auto-wiki/references/ingest-protocol.md` and `wiki-format.md`.
+- Storage follows `storage-spec.md`: numbers and states go to the domain's `data.db` (T0 `data_points`, T1/T2 `facts` zipper, T4 `events`); markdown stays the narrative layer. Run `schema.py` validation on every touched page.
+- The domain contract lives at `wiki/<domain>/_ontology.md` (engine layout) and is the authoritative truth source; Burrow's `_ontology/<domain>.md` files are the lite-mode equivalent — migrate them into the engine layout when you switch on the engine.
+- Engine `seeds/` are cold-start vocabularies; engine `validators/` plug into lint.
+
+**Burrow's own layer is unchanged in either mode**: write-type tagging (step 6), the gate ledger (step 7), the review queue, and the locked types. The engine decides *how* knowledge compiles; the ledger decides *who may apply it*. Without the engine, the pure-markdown procedure above is the complete fallback — zero dependencies, any agent can run it.
+
 ## After the gate
 
 - Append one line to `_burrow/runs.md`: timestamp, source, items applied / queued / rejected.

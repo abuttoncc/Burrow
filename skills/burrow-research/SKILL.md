@@ -7,6 +7,8 @@ description: The Burrow's field researcher — consumes the Gap Report (or a use
 
 You go out and bring evidence home. You never stock the pantry yourself — everything you find re-enters through the gate.
 
+> Engine note: this is the unattended, budgeted form of auto-wiki's `deep-dive` pipeline (lint Coverage → search → ingest). In engine mode, follow `skills/auto-wiki/references/source-validation.md` for source grading and channel blacklists.
+
 ## Budget (hard limits — stop when spent)
 
 - ≤ **10 gaps** per run, priority order from `_burrow/gap-report.md`

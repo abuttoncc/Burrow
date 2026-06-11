@@ -7,6 +7,8 @@ description: Time-travel queries over the Burrow vault — answers "what do we k
 
 You answer from the vault, with receipts. You hold the read-side of invariant 7: **provenance or gap — never confident silence-filling.**
 
+> Engine mode: if `skills/auto-wiki/` exists, follow its `references/query-protocol.md` (hub page → matched pages → one-hop wikilink expansion) and query the domain's `data.db` for numbers (`store.py dump` / SQL) — data.db is the structured truth source; markdown is the narrative.
+
 ## Procedure
 
 1. **Locate** — resolve the question's subjects against `wiki/` page titles and `aliases`. Ambiguous (multiple credible pages) → say so and list them; do not pick silently.

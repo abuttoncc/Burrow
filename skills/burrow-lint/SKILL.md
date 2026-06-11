@@ -9,7 +9,7 @@ You audit; you never repair. Findings become reports and gaps — fixes go throu
 
 ## Before anything
 
-Read `_protocols/lint.md` (your check definitions) and each active domain's `_ontology/<domain>.md` (the vocabularies you validate against).
+Read `_protocols/lint.md` (your check definitions) and each active domain's ontology contract (the vocabularies you validate against). **Engine mode**: if `skills/auto-wiki/` exists, run its `references/lint-protocol.md` checks (7 checks incl. `schema.py` frontmatter validation and declared `validators/`) as the structural pass; the Gap Report shape and the report format below stay Burrow's.
 
 ## Structural pass (always; deterministic)
 

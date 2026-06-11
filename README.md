@@ -28,7 +28,7 @@ INBOX (anything goes) ──► burrow-ingest (THE gate) ──► wiki/ (typed,
 
 ## Why another AI + Obsidian project?
 
-There are excellent projects in this space — [obsidian-wiki](https://github.com/Ar9av/obsidian-wiki) (LLM Wiki pattern at scale), [vault-intelligence](https://github.com/cybaea/obsidian-vault-intelligence) (the Gardener), [vault-operator](https://github.com/pssah4/vault-operator) (in-vault autonomous agent), [MegaMem](https://github.com/C-Bjorn/MegaMem) (temporal KG sync). Burrow descends from the same ancestor ([Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)) and adds three things none of them have:
+There are excellent projects in this space — [obsidian-wiki](https://github.com/Ar9av/obsidian-wiki) (LLM Wiki pattern at scale), [vault-intelligence](https://github.com/cybaea/obsidian-vault-intelligence) (the Gardener), [vault-operator](https://github.com/pssah4/vault-operator) (in-vault autonomous agent), [MegaMem](https://github.com/C-Bjorn/MegaMem) (temporal KG sync). Burrow descends from the same ancestor (the [LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)) via our own **[auto-wiki](https://github.com/hanlinlibham/auto-wiki)** knowledge compiler — bundled here as the engine — and adds three things none of them have:
 
 | | Per-action approval (typical) | **Burrow** |
 |---|---|---|
@@ -81,10 +81,28 @@ cross-domain-edge: { streak: 0,  threshold: 20, status: manual } # rejected 06-3
 retirement:      { status: locked }   # changes to current world-state: never automatic
 ```
 
+## Architecture: two layers, two modes
+
+```
+┌─ Burrow (governance) ─────────────────────────────────────┐
+│  the gate · write-types · earned-autonomy ledger ·        │
+│  review queue · flywheel routine · recall discipline      │
+├─ auto-wiki (compilation engine, bundled) ─────────────────┤
+│  ingest 3-way compare · six-tier storage (data.db) ·      │
+│  schema validation · seeds · validators · FTS5 scaling    │
+└───────────────────────────────────────────────────────────┘
+```
+
+Burrow bundles **[auto-wiki](https://github.com/hanlinlibham/auto-wiki)** (v0.2, `skills/auto-wiki/`) as its compilation engine — the engine decides *how* knowledge compiles; the ledger decides *who may apply it*. Two modes:
+
+- **Lite (zero dependencies)** — skip `skills/auto-wiki/`; the gate runs the pure-markdown protocols in `_protocols/`. Any agent, no Python.
+- **Engine (full strength)** — install `skills/auto-wiki/` too (needs Python 3.8+ and `pip install pydantic`); you gain SQLite bitemporal storage (`data.db`), frontmatter schema validation, domain seeds (e.g. FIBO pensions), logic validators, and BM25 scaling for large vaults.
+
 ## Skills
 
 | Skill | Role | Writes? |
 |---|---|---|
+| `auto-wiki` | **The engine** (bundled): ingest/recall/query/lint/deep-dive compilation core | via the gate only |
 | `burrow-ingest` | **The gate.** Route → extract → six-tier adjudication → vocab check → stage → promote/queue | the only one that writes `wiki/` |
 | `burrow-gate` | Review queue + ledger bookkeeping. Approve / reject / mark contested; updates streaks | ledger + staged items |
 | `burrow-lint` | Health check: orphans, broken links, out-of-vocab edges, contested, staleness → Gap Report | report only |
